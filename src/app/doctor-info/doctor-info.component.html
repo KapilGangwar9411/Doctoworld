@@ -1,0 +1,280 @@
+<div class="body_wrapper">
+    <section class="itemRow pt-4 themePadding">
+        <div class="container">
+            <div class="row g-3">
+                <div class="col-12 col-lg-8 ">
+                    <div class="card px-4 py-5">
+                        <div class="row g-0 align-items-end px-2">
+                            <!-- <div class="itemImg  col-12 col-md-3">
+                                <img src="assets/images/doctors/doc1.png" class="img-fluid crop_img">
+                            </div> -->
+                            <div *ngIf="doctor.user && doctor.user.image_url" class="itemImg  col-12 col-md-3">
+                                <img [src]="doctor.user.image_url" class="crop_img">
+                            </div>
+                            <div *ngIf="!doctor.user || !doctor.user.image_url" class="itemImg  col-12 col-md-3">
+                                <img src="assets/images/empty_dp.png" class="crop_img">
+                            </div>
+                            <div class="text_box col-12 col-md-9">
+                                <h2 class="d-flex">
+                                    {{doctor.name}}
+                                </h2>
+                                <h3 class="pb-4 ">{{doctor.specializations_text}}</h3>
+                                <div class="row">
+                                    <div class="col-12 col-md-6 col-lg-4 pt-2 pb-2">
+                                        <h3 class="pb-2">{{'experience' | translate}}</h3>
+                                        <h5>{{doctor.experience_years}} {{'years' | translate}}</h5>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-4 pt-2 pb-2">
+                                        <h3 class="pb-2">{{'consultancy_fees' | translate}}</h3>
+                                        <h5>{{currencyIcon}}{{doctor.fee}}</h5>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-4 pt-2 pb-2">
+                                        <h3 class="pb-2">{{'feedbacks' | translate}}</h3>
+                                        <h4 class="d-flex align-items-center">
+                                            <i class="zmdi zmdi-star"></i> {{doctor.ratings}}
+                                            <span>&nbsp;&nbsp;({{doctor.ratings_count}})</span>
+                                        </h4>
+                                    </div>
+                                    <!-- <div class="col-12 col-md-6 col-lg-3 pt-2 pb-2">
+                                        <h3 class="pb-2">{{'availability' | translate}}</h3>
+                                        <h5>{{availabilityToday}}</h5>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- About & Reviews start -->
+
+                    <ul class="nav">
+                        <li class="nav-item" [ngClass]="showSection == 1 ? 'active' : '' " (click)="onSelectTab(1)">
+                            <a class="nav-link">
+                                {{'about' | translate}}
+                            </a>
+                        </li>
+                        <li class="nav-item" [ngClass]="showSection == 2 ? 'active' : '' " (click)="onSelectTab(2)">
+                            <a class="nav-link">
+                                {{'feedbacks' | translate}}
+                            </a>
+                        </li>
+                        <li class="nav-item" [ngClass]="showSection == 3 ? 'active' : '' " (click)="onSelectTab(3)">
+                            <a class="nav-link">
+                                {{'availability' | translate}}
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="tab_content">
+                        <!-- About section start -->
+                        <div class="p-5 py-4 card" *ngIf="showSection == 1">
+                            <p>{{doctor.details}}</p>
+
+                            <div class="vendorList services_at">
+                                <h3>{{'services_at' | translate}}</h3>
+                                <div class="media" *ngFor="let hospital of doctor.hospitals" (click)="navHospitalInfo(hospital)" style="cursor: pointer !important;">
+                                    <div class="media-body w-100">
+                                        <h2>{{hospital.name}}</h2>
+                                        <h5 class="d-flex align-items-center">
+                                            {{hospital.address}}
+                                            <i class="zmdi zmdi-chevron-right end text-end"></i>
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="vendorList services_at">
+                                <h3>{{'services' | translate}}</h3>
+                                <div class="media">
+                                    <div class="media-body pt-0">
+                                        <h2 *ngFor="let category of doctor.services" class="p-0 pb-2">{{category.title}}
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="vendorList services_at">
+                                <h3>{{'specialization' | translate}}</h3>
+                                <div class="media">
+                                    <div class="media-body pt-0">
+                                        <h2 *ngFor="let category of doctor.specializations" class="p-0 pb-2">
+                                            {{category.title}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- About section end -->
+
+                        <!-- feedbacks start -->
+                        <div class="p-5 py-4 card" *ngIf="showSection == 2">
+                            <app-user-reviews [doctor]="doctor"></app-user-reviews>
+                        </div>
+                        <!-- feedbacks end -->
+
+                        <!-- Availability start -->
+                        <div class="p-5 py-4 card availability" *ngIf="showSection == 3">
+                            <div *ngFor="let hospital of doctor.hospitals " class="vendorList services_at pb-3">
+                                <h3 class="mb-0">{{'services_at' | translate}}</h3>
+                                <div class="media">
+                                    <div class="media-body w-100">
+                                        <h2>{{hospital.name}}</h2>
+                                        <h5 class="d-flex align-items-center">
+                                            {{hospital.address}}
+                                        </h5>
+                                    </div>
+                                </div>
+
+                                <ul class="list-group">
+                                    <li *ngFor="let availab of hospital.availability" class="list-group-item  animate__animated animate__fadeInUp wow">
+                                        <h3 class="mb-0 d-flex">
+                                            {{availab.days | translate}}
+                                            <span class="end">{{availab.from}} <small>to</small> {{availab.to}}</span>
+                                        </h3>
+                                    </li>
+                                    <!-- <li class="list-group-item  animate__animated animate__fadeInUp wow">
+                                        <h3 class="mb-0 d-flex">
+                                            {{'tuesday' | translate}}
+                                            <span class="end">12:00 <small>to</small> 20:00</span>
+                                        </h3>
+                                    </li>
+                                    <li class="list-group-item  animate__animated animate__fadeInUp wow">
+                                        <h3 class="mb-0 d-flex">
+                                            {{'wednesday' | translate}}
+                                            <span class="end">12:00 <small>to</small> 20:00</span>
+                                        </h3>
+                                    </li>
+                                    <li class="list-group-item  animate__animated animate__fadeInUp wow">
+                                        <h3 class="mb-0 d-flex">
+                                            {{'thursday' | translate}}
+                                            <span class="end">12:00 <small>to</small> 20:00</span>
+                                        </h3>
+                                    </li>
+                                    <li class="list-group-item  animate__animated animate__fadeInUp wow">
+                                        <h3 class="mb-0 d-flex">
+                                            {{'friday' | translate}}
+                                            <span class="end">12:00 <small>to</small> 20:00</span>
+                                        </h3>
+                                    </li>
+                                    <li class="list-group-item  animate__animated animate__fadeInUp wow">
+                                        <h3 class="mb-0 d-flex">
+                                            {{'saturday' | translate}}
+                                            <span class="end"><small>{{'not_available' | translate}}</small></span>
+                                        </h3>
+                                    </li>
+                                    <li class="list-group-item  animate__animated animate__fadeInUp wow">
+                                        <h3 class="mb-0 d-flex">
+                                            {{'sunday' | translate}}
+                                            <span class="end"><small>{{'not_available' | translate}}</small></span>
+                                        </h3>
+                                    </li> -->
+                                </ul>
+                            </div>
+
+
+                            <!-- <div class="vendorList services_at pb-3">
+                                <h3 class="mb-0">{{'services_at' | translate}}</h3>
+                                <div class="media">
+                                    <div class="media-body w-100">
+                                        <h2>Seven Star Clinic</h2>
+                                        <h5 class="d-flex align-items-center">
+                                            Hemilton Brige City Point, Hemilton, New York
+                                        </h5>
+                                    </div>
+                                </div>
+
+                                <ul class="list-group">
+                                    <li class="list-group-item  animate__animated animate__fadeInUp wow">
+                                        <h3 class="mb-0 d-flex">
+                                            {{'monday' | translate}}
+                                            <span class="end"><small>{{'not_available' | translate}}</small></span>
+                                        </h3>
+                                    </li>
+                                    <li class="list-group-item  animate__animated animate__fadeInUp wow">
+                                        <h3 class="mb-0 d-flex">
+                                            {{'tuesday' | translate}}
+                                            <span class="end"><small>{{'not_available' | translate}}</small></span>
+                                        </h3>
+                                    </li>
+                                    <li class="list-group-item  animate__animated animate__fadeInUp wow">
+                                        <h3 class="mb-0 d-flex">
+                                            {{'wednesday' | translate}}
+                                            <span class="end"><small>{{'not_available' | translate}}</small></span>
+                                        </h3>
+                                    </li>
+                                    <li class="list-group-item  animate__animated animate__fadeInUp wow">
+                                        <h3 class="mb-0 d-flex">
+                                            {{'thursday' | translate}}
+                                            <span class="end"><small>{{'not_available' | translate}}</small></span>
+                                        </h3>
+                                    </li>
+                                    <li class="list-group-item  animate__animated animate__fadeInUp wow">
+                                        <h3 class="mb-0 d-flex">
+                                            {{'friday' | translate}}
+                                            <span class="end"><small>{{'not_available' | translate}}</small></span>
+                                        </h3>
+                                    </li>
+                                    <li class="list-group-item  animate__animated animate__fadeInUp wow">
+                                        <h3 class="mb-0 d-flex">
+                                            {{'saturday' | translate}}
+                                            <span class="end">12:00 <small>to</small> 20:00</span>
+                                        </h3>
+                                    </li>
+                                    <li class="list-group-item  animate__animated animate__fadeInUp wow">
+                                        <h3 class="mb-0 d-flex">
+                                            {{'sunday' | translate}}
+                                            <span class="end">12:00 <small>to</small> 20:00</span>
+                                        </h3>
+                                    </li>
+                                </ul>
+                            </div> -->
+                        </div>
+                        <!-- Availability end -->
+                    </div>
+                    <!-- About & Reviews end -->
+                </div>
+                <div class="col-12 col-lg-4">
+                    <div class="book_an_appointment">
+                        <div class="card px-4 py-4">
+                            <h2 class="pb-4 pt-2 ">{{'book_an_appointment' | translate}}</h2>
+                            <form>
+                                <button class="btn" (click)="setViewType('active')">
+                                    {{'book_appointment' | translate}}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div *ngIf="doctor && doctor.id" class="col-12 col-lg-4">
+                    <app-appointment-book [doctor]="doctor"></app-appointment-book>
+                </div> -->
+            </div>
+        </div>
+    </section>
+
+    <div class="appointment_types" [ngClass]="viewType == 'active' ? 'list active':'list'" (click)="setViewType(null)">
+        <div class="appointment_options">
+            <h1>{{'select_appointment_type' | translate}}</h1>
+            <div class="options" (click)="navBookNow('online')">
+                <h2 class="d-flex">
+                    {{'online_consultancy' | translate}}
+                    <span class="end">{{currencyIcon}}{{doctor.meta.fee_online}}</span>
+                </h2>
+            </div>
+            <div class="options" (click)="navBookNow('offline')">
+                <h2 class="d-flex">
+                    {{'clinic_visit' | translate}}
+                    <span class="end">{{currencyIcon}}{{doctor.fee}}</span>
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Download app section start -->
+    <app-download-our-app> </app-download-our-app>
+    <!-- Download app section end -->
+
+    <!--Footer start -->
+    <app-footer></app-footer>
+    <!--Footer end -->
+</div>

@@ -1,0 +1,110 @@
+.pageTitle {
+    padding-bottom: 30px;
+    .container {
+        background: var(--bg-white);
+        border-radius: 12px;
+        .img_box {
+            height: 160px;
+            width: 160px;
+            border-radius: 12px;
+            margin-right: 25px;
+        }
+        h2 {
+            margin: 0;
+            padding-bottom: 10px;
+            color: var(--text-dark);
+            font-size: 1.45rem;
+            font-weight: 600;
+        }
+        h3 {
+            margin: 0;
+            color: var(--text-light2);
+            font-size: 0.8rem;
+            font-weight: 400;
+            padding-bottom: 20px;
+        }
+        h5 {
+            margin: 0;
+            color: var(--text-light2);
+            font-size: .8rem;
+            font-weight: 400;
+            i {
+                font-size: .85rem;
+                min-width: 17px;
+            }
+            strong {
+                color: #7dca24;
+                font-weight: 600;
+                cursor: pointer;
+                span {
+                    color: var(--text-light2);
+                    font-weight: 400;
+                }
+            }
+        }
+        form .form-group {
+            .form-group-inner {
+                border-radius: 10px;
+                min-height: 45px !important;
+                .form-control {
+                    min-height: 45px;
+                    line-height: 45px;
+                }
+                i {
+                    color: var(--text-light);
+                }
+            }
+            &.favorite {
+                .form-group-inner {
+                    cursor: pointer;
+                    .form-control {
+                        cursor: pointer;
+                    }
+                    i {
+                        font-size: 1.4rem;
+                        color: var(--text-black);
+                        min-width: 25px;
+                        &:nth-child(even) {
+                            display: none;
+                            color: #de0c0b;
+                        }
+                    }
+                }
+                &.active {
+                    .form-group-inner {
+                        i {
+                            &:nth-child(odd) {
+                                display: none;
+                            }
+                            &:nth-child(even) {
+                                display: block;
+                            }
+                        }
+                    }
+                }
+            }
+            &.bookAtable {
+                width: fit-content;
+                .form-group-inner {
+                    align-items: center;
+                    cursor: pointer;
+                    img {
+                        display: block;
+                        width: 20px;
+                    }
+                    h3 {
+                        margin: 0;
+                        font-weight: 500;
+                        color: var(--text-black);
+                        font-size: .8rem;
+                        padding: 0 8px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.body_wrapper {
+    padding-top: 20px;
+}

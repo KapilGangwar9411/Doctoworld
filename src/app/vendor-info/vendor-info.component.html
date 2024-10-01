@@ -1,0 +1,89 @@
+<div class="body_wrapper">
+    <!-- Banner section start -->
+    <div class="pageTitle">
+        <div class="container p-4">
+            <div class="row g-0 align-items-center  col-12 col-md-12 col-lg-12 col-xl-12 px-0">
+                <div class="img_box center_img mb-3 mb-md-0">
+                    <img [src]="vendor?.image" class="crop_img">
+                </div>
+                <div class="col-12 col-md">
+                    <h2>{{vendor?.name}}</h2>
+                    <!-- <h5 class="d-block d-md-flex align-items-center col-xl-8 px-0">
+                        <i class="zmdi zmdi-pin"></i> Willington Bridge
+                    </h5> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Item section section start -->
+    <section class="itemRow pt-0 themePadding">
+        <div *ngIf="!(vendorProducts && vendorProducts.length)" class="sectionContent">
+            <div class="container">
+                <div class="row g-3">
+                    <div *ngFor="let cat of [1,2,3,4,5,6,7,8,9]"
+                        class="col-12 col-md-6 col-lg-3 col-xl-2 animate__animated animate__zoomIn wow">
+                        <div class="item px-4 placeholder-wave">
+                            <div class="itemImg">
+                                <img src="assets/images/empty_image.png" class="placeholder">
+                            </div>
+                            <div class="itemText">
+                                <h2 class="placeholder">$nbsp;</h2>
+                                <h4 class="d-flex align-items-center">
+                                    <strong class="placeholder">$nbsp;</strong>
+                                    <span class="end">
+                                        <i class="zmdi zmdi-plus placeholder"></i>
+                                    </span>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div *ngIf="vendorProducts && vendorProducts.length" class="sectionContent">
+            <div class="container">
+                <div class="row g-3">
+                    <div *ngFor="let product of vendorProducts"
+                        class="col-12 col-md-6 col-lg-3 col-xl-2 animate__animated animate__zoomIn wow">
+                        <div class="item px-4">
+                            <div *ngIf="product.images && product.images.length" class="itemImg"
+                                (click)="medicine_info(product)">
+                                <img [src]="product.images[0]">
+                                <img src="assets/images/icons/px.png" class="prescription">
+                            </div>
+                            <div class="itemText">
+                                <h2 (click)="medicine_info(product)">{{product.title}}</h2>
+                                <h4 class="d-flex align-items-center">
+                                    {{product.priceToShow}}
+                                    <span class="end"
+                                        *ngIf="!eComService.isExistsCartItem(eComService.genCartItemFromProduct(product))"
+                                        (click)="addProCart(product)">
+                                        <i class="zmdi zmdi-plus"></i>
+                                    </span>
+                                    <h6
+                                        *ngIf="eComService.isExistsCartItem(eComService.genCartItemFromProduct(product))">
+                                        <span (click)="removeCartItem(product)"><i class="zmdi zmdi-minus"></i></span>
+                                        <strong>{{eComService.getCartProductQuantity(getProductId(product))}}</strong>
+                                        <span (click)="addProCart(product)"><i class="zmdi zmdi-plus"></i></span>
+                                    </h6>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Item section section end -->
+    <!-- Download app section start -->
+    <app-download-our-app> </app-download-our-app>
+    <!-- Download app section end -->
+
+    <!--Footer start -->
+    <app-footer></app-footer>
+    <!--Footer end -->
+</div>

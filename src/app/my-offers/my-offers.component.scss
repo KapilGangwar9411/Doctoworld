@@ -1,0 +1,48 @@
+.list-group {
+    .list-group-item {
+        position: relative;
+        margin-bottom: 13px;
+        background: var(--bg-white);
+        border-radius: 6px;
+        min-height: 85px;
+        max-width: 100%;
+        overflow: hidden;
+        padding: 0 12px;
+        .text_box {
+            h2 {
+                margin: 0 auto;
+                color: var(--text-black);
+                font-size: 0.85rem;
+                padding-bottom: 5px;
+                letter-spacing: 1.5px;
+            }
+            p {
+                margin: 0;
+                color: var(--text-light);
+                font-size: 0.9rem;
+                font-weight: 400;
+            }
+        }
+        .offer_code {
+            // min-width: 110px;
+            min-width: fit-content;
+            h3 {
+                border-radius: 50px;
+                background: var(--primary);
+                color: var(--text-white);
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                padding: 0 10px;
+                height: 45px;
+                text-align: center;
+                min-width: 160px;
+                width: fit-content;
+                margin: auto;
+                line-height: 45px;
+                // cursor: pointer;
+                position: relative;
+                z-index: 99;
+            }
+        }
+    }
+}

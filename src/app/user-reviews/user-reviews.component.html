@@ -1,0 +1,44 @@
+<ul class="list-group">
+    <div *ngIf="(!reviews || !reviews.length)" class="empty_view">
+        <div style="text-align:center">
+            <img src="assets/images/empty_orders.png" alt="no offers" />
+            <span style="color:#9E9E9E; font-weight:bold;">
+                {{(isLoading ? 'loading' : 'empty_reviews') | translate}}
+            </span>
+        </div>
+    </div>
+    <li *ngFor="let review of reviews | paginate: { itemsPerPage: pageSize, currentPage: pageNo }" class="list-group-item animate__animated animate__fadeInUp wow">
+        <h2>{{review.user.name}}</h2>
+        <h3 class="d-flex">
+            <i [ngClass]="review.rating>=1 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'"></i> 
+            <i [ngClass]="review.rating>=2 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'"></i> 
+            <i [ngClass]="review.rating>=3 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'"></i> 
+            <i [ngClass]="review.rating>=4 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'"></i> 
+            <i [ngClass]="review.rating>=5 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'"></i> 
+            {{review.rating}}
+            <span class="end">{{review.created_at}}</span>
+        </h3>
+        <p>{{review.review}}</p>
+    </li>
+    <div class="pagination-container">
+        <div class="container" *ngIf="pageTotal > pageSize">
+            <div class="row align-items-center">
+                <div class="col-12 col-md-6">
+                    <h2 class="text-center text-md-start pb-3 pb-md-0">
+                        {{'showing' | translate}} {{pageNo}} {{'to' | translate}} {{pageSize}} {{'of' | translate}}
+                        {{pageTotal}} {{'items' | translate}}
+                    </h2>
+                </div>
+                <div class="col-12 col-md-6 d-flex">
+                    <nav class="end" aria-label="Page navigation example">
+                        <nav class="navigation col-12" aria-label="Page navigation example">
+                            <pagination-controls [responsive]="isResponsive" [previousLabel]="'prev' | translate"
+                                [nextLabel]="'next' | translate" (pageChange)="onChangePage($event)">
+                            </pagination-controls>
+                        </nav>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</ul>

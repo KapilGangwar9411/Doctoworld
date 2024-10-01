@@ -1,0 +1,24 @@
+.empty-view {
+    width: fit-content;
+    margin: auto;
+    height: fit-content;
+    top: 0;
+    // position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    img {
+        width: 100px;
+        margin: auto;
+    }
+    span {
+        display: block;
+        text-align: center;
+    }
+    button {
+        margin-top: 50px;
+        span {
+            display: unset !important;
+        }
+    }
+}

@@ -1,0 +1,199 @@
+/*
+ 
+=================================================
+      RTL Styling Code
+=================================================
+*/
+
+[dir="rtl"] {
+    .end {
+        margin-left: 0 !important;
+        margin-right: auto !important;
+    }
+    .text-end {
+        text-align: left !important;
+    }
+    .text-lg-start,
+    .text-start {
+        text-align: right !important;
+    }
+    .itemRow .item {
+        img {
+            &.prescription {
+                left: 18px !important;
+                right: unset !important;
+            }
+        }
+        .itemText {
+            padding-left: 0 !important;
+            padding-right: 20px !important;
+            h4 span::before {
+                transform: rotate(312deg) !important;
+            }
+        }
+    }
+    app-sign-in {
+        .body-inner .doctor_img {
+            left: unset!important;
+            right: 0!important;
+        }
+    }
+    header {
+        .moreOptions {
+            left: -100%;
+            right: unset !important;
+            ul {
+                left: -100%;
+                right: unset !important;
+            }
+        }
+        &.active {
+            .moreOptions {
+                left: 0%;
+                ul {
+                    left: 0%;
+                }
+            }
+        }
+    }
+    .vendorList .media .img_box {
+        margin-right: 0 !important;
+        margin-left: 15px !important;
+    }
+    .my-cart .card ul li {
+        img {
+            margin-right: 0 !important;
+            margin-left: 15px !important;
+        }
+        .text_box h6 {
+            padding-left: 0!important;
+            padding-right: 24px!important;
+        }
+    }
+    app-rate-doctor {
+        .send_to_bank form .card .media .img_box {
+            margin-right: 0!important;
+            margin-left: 15px!important;
+        }
+    }
+    app-vendor-info {
+        .pageTitle .container {
+            .img_box {
+                margin-right: 0!important;
+                margin-left: 25px!important;
+            }
+        }
+        .card .media {
+            .img_box {
+                margin-right: 0!important;
+                margin-left: 20px!important;
+            }
+        }
+        .cartSetcion .card ul li .text_box h6 {
+            padding-left: 0!important;
+            padding-right: 24px!important;
+        }
+        .cartSetcion .card ul li img {
+            margin-right: 0!important;
+            margin-left: 15px!important;
+        }
+    }
+    app-chat {
+        .chat_container .chat_box {
+            &.send {
+                margin-left: 0 !important;
+                margin-right: auto !important;
+                .chat {
+                    margin-left: 0 !important;
+                    margin-right: auto !important;
+                    h2 {
+                        text-align: left !important;
+                    }
+                    p {
+                        text-align: left !important;
+                    }
+                }
+            }
+            &.received .chat {}
+        }
+    }
+    @media (min-width: 768px) {
+        .text-md-end {
+            text-align: left!important;
+        }
+        app-my-account {
+            .nav .nav-item {
+                &::after {
+                    left: unset !important;
+                    right: 0 !important;
+                }
+                &::before {
+                    left: unset !important;
+                    right: 0 !important;
+                }
+            }
+        }
+        app-my-offers {
+            .list-group .list-group-item h2 {
+                padding-left: 0;
+                padding-right: 25px;
+            }
+        }
+        app-vendor-info .nav .nav-item {
+            .nav-link::after {
+                right: unset!important;
+                left: -100%!important;
+            }
+            &.active {
+                .nav-link::after {
+                    left: 0%!important;
+                }
+            }
+        }
+    }
+    @media (min-width: 992px) {
+        app-my-offers {
+            .list-group .list-group-item h2 {
+                padding-left: 0;
+                padding-right: 30px;
+            }
+        }
+        app-my-orders .vendorList .media,
+        app-my-appointment .vendorList .media {
+            padding-right: 15px !important;
+            padding-left: 50px !important;
+            &::before {
+                left: unset !important;
+                right: 0 !important;
+            }
+        }
+    }
+    @media (min-width: 992px) {
+        header {
+            .moreOptions {
+                ul {
+                    right: unset !important;
+                    left: 40px !important;
+                    transform-origin: left top;
+                    opacity: 0;
+                    li {
+                        a {
+                            padding: 10px 0 !important;
+                        }
+                    }
+                }
+            }
+            &.active {
+                ul {
+                    transform: scale3d(1, 1, 1);
+                    opacity: 1;
+                }
+            }
+        }
+    }
+    @media (min-width: 1400px) {
+        header .moreOptions ul {
+            left: 120px !important;
+        }
+    }
+}

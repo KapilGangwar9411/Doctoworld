@@ -1,0 +1,63 @@
+<!-- track order section start -->
+
+<div class="row g-0 d-flex">
+    <div class="col-12 col-md-6 col-xl-3 mx-auto my-auto">
+        <div class="send_to_bank">
+            <div class="header d-flex">
+                <i class="zmdi zmdi-close" (click)="close()"></i>
+                <h2>{{'rate_doctor' | translate}} </h2>
+            </div>
+            <form class=" px-0">
+                <div class="card pt-3">
+                    <div class="media pb-2 d-flex align-items-center">
+                        <div class="img_box center_img">
+                            <img [src]="doctor.user.image_url" class="crop_img">
+                        </div>
+                        <div class="media-body">
+                            <h2 class="d-flex">{{doctor.name}}
+                            </h2>
+                            <h3>{{doctor.specializations_text}}</h3>
+                        </div>
+                    </div>
+
+                    <div class="overall_experience animate__animated animate__fadeInUp px-3">
+                        <h2>{{'overall_experience' | translate}}</h2>
+                        <div class="rate">
+                            <span [ngClass]="rateRequest.rating>=1 ? 'icon_box active' : 'icon_box'" (click)="setRating(1)">
+                                <i class="zmdi zmdi-star"></i>
+                            </span>
+                            <span [ngClass]="rateRequest.rating>=2 ? 'icon_box active' : 'icon_box'" (click)="setRating(2)">
+                                <i class="zmdi zmdi-star"></i>
+                            </span>
+                            <span [ngClass]="rateRequest.rating>=3 ? 'icon_box active' : 'icon_box'" (click)="setRating(3)">
+                                <i class="zmdi zmdi-star"></i>
+                            </span>
+                            <span [ngClass]="rateRequest.rating>=4 ? 'icon_box active' : 'icon_box'" (click)="setRating(4)">
+                                <i class="zmdi zmdi-star"></i>
+                            </span>
+                            <span [ngClass]="rateRequest.rating>=5 ? 'icon_box active' : 'icon_box'" (click)="setRating(5)">
+                                <i class="zmdi zmdi-star"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="add_feedback animate__animated animate__fadeInUp px-3">
+                        <h2>{{'add_feedback' | translate}}</h2>
+                        <div class="from_inner">
+                            <div class="form-group ">
+                                <div class="form-group-inner">
+                                    <textarea type="text" rows="5" class="form-control" name="review" [(ngModel)]="rateRequest.review">{{'write_your_feedback' | translate}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn end animate__animated animate__fadeInUp" (click)="submitRating()">
+                        {{'submit' | translate}}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- track order section start -->

@@ -1,0 +1,271 @@
+.category {
+    background: var(--bg-white);
+    margin-bottom: 20px;
+    h3 {
+        margin: 0;
+        a {
+            color: var(--text-black);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 18px 0;
+            width: fit-content;
+            margin: 0 auto;
+            i {
+                font-size: 1.35rem;
+                min-width: 24px;
+            }
+        }
+    }
+}
+
+.card {
+    background: var(--bg-white);
+    box-shadow: none;
+    border-radius: 15px;
+    border: 0;
+    margin-bottom: 10px;
+    .itemImg {
+        display: flex;
+        align-items: center;
+        min-height: 160px;
+        img {
+            max-height: 120px;
+            max-width: 140px;
+        }
+    }
+    .text_box {
+        h2 {
+            margin: 0;
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            font-weight: 500;
+            padding-bottom: 15px;
+            img {
+                display: block;
+                width: 18px;
+                max-width: 18px;
+            }
+        }
+        h3 {
+            margin: 0;
+            color: var(--text-light);
+            font-weight: 500;
+            font-size: .9rem;
+        }
+        h4 {
+            margin: 0;
+            color: var(--yelow-color);
+            font-size: 1.0rem;
+            font-weight: 600;
+            i {
+                font-size: 1.2rem;
+                min-width: 20px;
+            }
+            span {
+                color: var(--text-light);
+                min-width: fit-content;
+                font-weight: 400;
+            }
+        }
+        .bookmark {
+            cursor: pointer;
+            i {
+                color: var(--text-light);
+                font-size: 1.8rem;
+                transition: all .5s;
+                min-width: 20px;
+                text-align: center;
+                &.zmdi-bookmark {
+                    display: none;
+                    color: #de0c0b;
+                }
+            }
+            &.active {
+                i {
+                    &.zmdi-bookmark-outline {
+                        display: none;
+                    }
+                    &.zmdi-bookmark {
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.nav {
+    padding: 0;
+    background: var(--bg-color);
+    border-radius: 15px 15px 0 0;
+    overflow: hidden;
+    .nav-item {
+        cursor: pointer;
+        position: relative;
+        min-width: 140px;
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-white);
+            opacity: 0;
+            transition: all .5s;
+        }
+        .nav-link {
+            display: block;
+            position: relative;
+            z-index: 99;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            font-weight: 400;
+            padding: 13px 15px;
+            text-align: center;
+            letter-spacing: .5px;
+        }
+        &.active {
+            &::before {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.tab_content {
+    .card {
+        border-radius: 0 0px 15px 15px;
+        p {
+            margin: 0;
+            color: var(--text-dark2);
+            font-size: 0.9rem;
+            line-height: 30px;
+            padding-bottom: 25px;
+        }
+        .vendorList {
+            h3 {
+                color: var(--text-light);
+                font-size: 0.85rem;
+                font-weight: 400;
+                padding-bottom: 10px;
+            }
+            .media {
+                box-shadow: none !important;
+                padding: 0 !important;
+                transform: none !important;
+                .img_box {
+                    min-width: 95px;
+                    height: 95px;
+                }
+            }
+        }
+        .list-group {
+            border-radius: 0;
+            border: 0;
+            padding: 15px 0;
+            li {
+                border: 0;
+                padding: 15px 0px;
+                h2 {
+                    margin: 0;
+                    color: var(--text-black);
+                    font-size: 1.1rem;
+                    padding-bottom: 8px;
+                }
+                h3 {
+                    margin: 0;
+                    color: #7dca24;
+                    font-weight: 600;
+                    cursor: pointer;
+                    font-size: 0.8rem;
+                    min-width: fit-content;
+                    padding-bottom: 5px;
+                    i {
+                        font-size: 0.85rem;
+                        min-width: 17px;
+                    }
+                    span {
+                        font-weight: 400;
+                        color: var(--text-light);
+                        min-width: fit-content;
+                    }
+                }
+                p {
+                    margin: 0;
+                    color: var(--text-dark2);
+                    font-size: .8rem;
+                    line-height: 26px;
+                    padding-bottom: 0;
+                }
+            }
+        }
+    }
+}
+
+.price_info {
+    .card {
+        h1 {
+            margin: 0;
+            color: var(--text-dark);
+            font-size: 1.85rem;
+            font-weight: 600;
+            sub {
+                color: var(--text-light);
+                font-weight: 400;
+                font-size: 0.9rem;
+            }
+        }
+        form .form-group {
+            label {
+                font-weight: 400;
+                font-size: 0.9rem;
+                color: var(--text-light);
+            }
+            .form-group-inner {
+                border-radius: 9px;
+                min-height: 50px !important;
+                color: var(--text-light);
+                position: relative;
+                .form-select {
+                    color: var(--text-light2) !important;
+                    cursor: pointer;
+                    position: relative;
+                    z-index: 999;
+                }
+                i {
+                    position: absolute;
+                    right: 17px;
+                    color: var(--text-dark2);
+                    font-size: 1.5rem;
+                }
+            }
+        }
+        button.btn {
+            visibility: visible;
+            width: 100%;
+            border-radius: 9px;
+            letter-spacing: 0;
+            text-transform: unset;
+            font-weight: 400;
+            font-size: .95rem !important;
+        }
+    }
+}
+
+.empty_view {
+    width: fit-content;
+    margin: auto;
+    height: fit-content;
+}
+
+.empty_view img {
+    width: 100px;
+    margin: auto;
+}
+
+.empty_view span {
+    display: block;
+    text-align: center;
+}

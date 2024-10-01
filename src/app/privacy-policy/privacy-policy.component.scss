@@ -1,0 +1,51 @@
+.pageTitle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.card {
+    margin: auto;
+    border-radius: 0;
+    height: fit-content;
+    right: 0;
+    left: 0;
+    // padding: 45px 25px;
+    padding-bottom: 30px;
+    form {
+        h2 {
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 1.65rem;
+            margin: 0;
+            span {
+                min-width: fit-content;
+                font-size: 1.7rem;
+                color: var(--text-black);
+                cursor: pointer;
+            }
+        }
+        p {
+            margin: 0;
+            color: var(--text-black);
+            font-size: 1rem;
+            padding-bottom: 20px;
+            line-height: 30px;
+        }
+    }
+    h5 {
+        position: absolute;
+        width: 100%;
+        max-width: calc(100% - 70px);
+        left: 0;
+        right: 0;
+        top: 24px;
+        margin: 0 auto;
+        font-size: .9rem;
+        color: var(--text-black);
+        span {
+            cursor: pointer;
+        }
+    }
+}

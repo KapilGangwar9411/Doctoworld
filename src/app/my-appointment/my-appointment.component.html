@@ -1,0 +1,264 @@
+<div class="body_wrapper">
+    <!-- Banner section start -->
+    <div class="pageTitle">
+        <div class="container position-relative">
+            <h1 class="text-center py-5 pb-4 text-md-start">
+                {{'my_appointments' | translate}}
+            </h1>
+        </div>
+    </div>
+
+    <section class="themePadding  pt-2">
+        <div class="container order_info_container">
+            <div class="container_inner">
+                <div *ngIf="isLoading && !(appointments && appointments.length)" class="row g-0">
+                    <!-- Appointments list section start -->
+                    <div class="col-12 col-lg-5 col-xl-5 placeholder-glow">
+                        <div class="order_list">
+                            <div class="vendorList">
+                                <div *ngFor="let ap of [1,2,3,4,5,6,7,8,9]">
+                                    <div class="media placeholder-wave pb-2">
+                                        <div class="img_box center_img placeholder">
+                                            <img src="assets/images/empty_image.png" class="crop_img ">
+                                        </div>
+                                        <div class="media-body">
+                                            <h2 class="d-flex col-8 placeholder mb-2"> </h2>
+                                            <h3 class="d-flex" style="min-height: fit-content;">
+                                                <span class="placeholder  col-6">&nbsp;&nbsp;</span>
+                                            </h3>
+                                            <h4 class="d-flex col-5 placeholder py-0 mx-0">
+                                                &nbsp;&nbsp;&nbsp;
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Appointments list section end -->
+
+                    <div class="col-12 col-lg-7 col-xl-7 pt-5 pt-lg-3">
+                        <div class="appointment_placeholder text-center pt-5">
+                            <div class="close d-lg-none">
+                                <i class="zmdi zmdi-close"></i>
+                            </div>
+                            <div class="appointment_placeholder_inner">
+                                <img src="assets/images/myappointment_placeholder.png" class="mb-4 img-fluid col-lg-8">
+                                <h2>{{'click_on_appointment_to_view_details' | translate}} </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div *ngIf="isLoading && !(appointments && appointments.length)"
+                    class="custome_spinner justify-content-center empty_view">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <h6>{{'loading' | translate}}...</h6>
+                </div> -->
+                <div *ngIf="!isLoading && !(appointments && appointments.length)" class="empty_view">
+                    <img src="assets/images/empty_appointments.png" class="img-fluid">
+                    <h6>{{'empty_appointments' | translate}}</h6>
+                </div>
+                <div *ngIf="(appointments && appointments.length)" class="row g-0">
+                    <!-- Appointments list section start -->
+                    <div class="col-12 col-lg-5 col-xl-5">
+                        <div class="order_list">
+                            <div class="vendorList" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="300" (scrolled)="onScrollDown()">
+                                <div *ngFor="let ap of appointments">
+                                    <h5 *ngIf="0 > ap.id">{{ap.type | translate}}</h5>
+                                    <div *ngIf="ap.id > 0" class="media pb-2" [ngClass]="showAppDetails && showAppDetails.id == ap.id ? 'active' : '' " (click)="navAppointmentDetail(ap)">
+
+                                        <div *ngIf="ap.doctor.user && ap.doctor.user.image_url" class="img_box center_img">
+                                            <img [src]="ap.doctor.user.image_url" class="crop_img">
+                                        </div>
+
+                                        <div *ngIf="!ap.doctor.user || !ap.doctor.user.image_url" class="img_box center_img">
+                                            <img src="assets/images/empty_dp.png" class="crop_img">
+                                        </div>
+                                        <div class="media-body">
+                                            <h2 class="d-flex">
+                                                {{ap.doctor.name}}
+                                                <!-- <i class="zmdi zmdi-more-vert end"></i> -->
+                                                <!-- <i *ngIf="(ap.status == 'pending' || ap.status == 'complete') && optionsAppointment != ap.id" class="zmdi zmdi-more-vert ion-text-end end" (click)="showOptions(ap)"></i> -->
+                                                <!-- <i *ngIf="(ap.status == 'pending' || ap.status == 'complete') && optionsAppointment == ap.id" class="zmdi zmdi-close ion-text-end end" (click)="showOptions(ap)"></i> -->
+                                                <span *ngIf="(ap.status == 'cancelled' || ap.status == 'rejected' || ap.status == 'complete')" class="status cancelled end">
+                                                    {{ ('appointment_status_'+ap.status) | translate}}
+                                                </span>
+                                                <span *ngIf="!(ap.status == 'cancelled' || ap.status == 'rejected' || ap.status == 'complete')" class="status end">
+                                                    {{ ('appointment_status_'+ap.status) | translate}}
+                                                </span>
+                                            </h2>
+
+                                            <div class="option" *ngIf="ap.status == 'pending' && optionsAppointment == ap.id && !ap.reschedule">
+                                                <span class="status end" (click)="confirmCancel(ap)">
+                                                    {{'cancel' | translate}}
+                                                </span>
+                                            </div>
+                                            <div class="option" *ngIf="(ap.status == 'pending' || ap.status == 'complete') && optionsAppointment == ap.id && ap.reschedule">
+                                                <span class="status end" (click)="confirmReschedule(ap)">
+                                                    {{'reschedule' | translate}}
+                                                </span>
+                                            </div>
+
+                                            <h3>{{ap.doctor.specializations_text}}</h3>
+                                            <h4 class="d-flex">
+                                                {{ap.date_toshow}} | {{ap.time_from_toshow}}
+
+                                                <!-- <span class="icon_box end">
+                                                    <i class="zmdi zmdi-phone text-start"></i>
+                                                    <i class="zmdi  zmdi-comment-alt-text text-end" (click)="chatAppointment(ap)"></i>
+                                                </span> -->
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Appointments list section end -->
+
+
+                    <!-- Appointment info section start -->
+                    <div class="col-12 col-lg-7 col-xl-7 pt-5 pt-lg-3">
+                        <div *ngIf="!(showAppDetails && showAppDetails.id)" class="appointment_placeholder text-center pt-5" [ngClass]="showAppDetails && showAppDetails.id ? '' : 'active' ">
+                            <div class="close d-lg-none">
+                                <i class="zmdi zmdi-close"></i>
+                            </div>
+                            <div class="appointment_placeholder_inner">
+                                <img src="assets/images/myappointment_placeholder.png" class="mb-4 img-fluid col-lg-8">
+                                <h2>{{'click_on_appointment_to_view_details' | translate}} </h2>
+                            </div>
+                        </div>
+
+                        <div *ngIf="(showAppDetails && showAppDetails.id)" class="appointment_info pt-lg-0" [ngClass]="showAppDetails && showAppDetails.id ? 'active' : '' ">
+                            <br>
+                            <div class="card px-4 py-4">
+                                <div class="close d-lg-none">
+                                    <h3>{{'close' | translate}} </h3>
+                                </div>
+
+                                <div class="row g-0 align-items-center px-0 pb-5 px-xl-3">
+                                    <!-- <div class="itemImg col-12 col-md-3 col-lg-5 col-xl-3">
+                                        <img src="assets/images/doctors/doc1.png" class="img-fluid crop_img">
+                                    </div> -->
+                                    <div *ngIf="showAppDetails.doctor.user && showAppDetails.doctor.user.image_url" class="itemImg col-12 col-md-3 col-lg-5 col-xl-3">
+                                        <img [src]="showAppDetails.doctor.user.image_url" class="img-fluid crop_img">
+                                    </div>
+                                    <div *ngIf="!showAppDetails.doctor.user || !showAppDetails.doctor.user.image_url" class="itemImg col-12 col-md-3 col-lg-5 col-xl-3">
+                                        <img src="assets/images/empty_dp.png" class="img-fluid crop_img">
+                                    </div>
+                                    <div class="text_box col-12 col-md-9 col-lg-7 col-xl-9 pt-4 pt-lg-0">
+                                        <h2 class="d-flex">
+                                            {{showAppDetails.doctor.name}}
+                                            <span class="icon_box end" (click)="chatAppointment(showAppDetails)">
+                                                <i class="zmdi zmdi-comment-alt-text"></i>
+                                                {{'chat_now' | translate}}
+                                            </span>
+                                        </h2>
+                                        <h3 class="d-flex">{{showAppDetails.doctor.specializations_text}}
+                                            <span *ngIf="showAppDetails.status == 'pending' && !showAppDetails.reschedule" class="cancel_status end" (click)="confirmCancel(showAppDetails)">
+                                                {{'cancel' | translate}}
+                                            </span>
+                                            <span *ngIf="(showAppDetails.status == 'pending' || showAppDetails.status == 'complete') && showAppDetails.reschedule" class="cancel_status end" (click)="confirmReschedule(showAppDetails)">
+                                                {{'reschedule' | translate}}
+                                            </span>
+                                        </h3>
+                                        <h6><span class="end">
+                                                {{ ('appointment_status_'+showAppDetails.status) | translate}}
+                                        </span>
+                                        </h6>
+                                        <h6 *ngIf="canRate()" class="end" (click)="rateDoc()">{{'rate_doc' | translate}}</h6>
+                                    </div>
+                                </div>
+
+                                <div class="info px-xl-3">
+                                    <div class="text_box">
+                                        <h3>{{'appointment_on' | translate}}
+                                            <!-- <span *ngIf="canRate()" class="end" (click)="rateDoc()">{{'rate_doc' | translate}}</span> -->
+                                        </h3>
+                                        <h2>{{ap_date_formatted}}</h2>
+                                    </div>
+
+                                </div>
+                                <div class="info px-xl-3">
+                                    <div class="text_box">
+                                        <h3>{{'appointment_number' | translate}}</h3>
+                                        <h2>{{showAppDetails.id}}</h2>
+                                    </div>
+                                </div>
+                                <!-- <div class="info px-xl-3">
+                                    <div class="text_box">
+                                        <h3>{{'location' | translate}}</h3>
+                                        <h2 class="pb-2">Apple Hospital</h2>
+                                        <h4>Walter Street, Wallington, New York.</h4>
+                                    </div>
+                                </div> -->
+
+                                <div *ngIf="showAppDetails.meta && showAppDetails.meta.reason" class="info px-xl-3">
+                                    <div class="text_box">
+                                        <h3>{{'appointment_booked_for' | translate}}</h3>
+                                        <h2>{{showAppDetails.meta.reason}}</h2>
+                                    </div>
+                                </div>
+                                <div class="info px-xl-3">
+                                    <div *ngFor="let record of showAppDetails.meta.records" class="row g-0 align-items-end">
+                                        <div class="col-12 col-md-6 col-lg-8">
+                                            <div class="text_box">
+                                                <h3>{{'attachment' | translate}}</h3>
+                                                <h2>{{record.title}}</h2>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="text_box d-flex d-block d-md-flex">
+                                                <h2 class="ml-0 pt-3 pt-md-0 end" style="cursor: pointer; color: var(--primary);" (click)="viewRecord(record.url)">
+                                                    <i class="zmdi zmdi-download text-start"></i> {{'download' | translate}}
+                                                </h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Appointment info section end -->
+                </div>
+                <div *ngIf="isLoading && (appointments && appointments.length)" class="custome_spinner justify-content-center empty_view">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <h6>{{'loading' | translate}}...</h6>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- <div class="pagination-container">
+        <div class="container" *ngIf="pageTotal > pageSize">
+            <div class="row align-items-center">
+                <div class="col-12 col-md-6">
+                    <h2 class="text-center text-md-start pb-3 pb-md-0">
+                        {{'showing' | translate}} {{pageNo}} {{'to' | translate}} {{pageSize}} {{'of' | translate}}
+                        {{pageTotal}} {{'items' | translate}}
+                    </h2>
+                </div>
+                <div class="col-12 col-md-6 d-flex">
+                    <nav class="end" aria-label="Page navigation example">
+                        <nav class="navigation col-12" aria-label="Page navigation example">
+                            <pagination-controls [responsive]="isResponsive" [previousLabel]="'prev' | translate"
+                                [nextLabel]="'next' | translate" (pageChange)="onChangePage($event)">
+                            </pagination-controls>
+                        </nav>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Download app section start -->
+    <app-download-our-app> </app-download-our-app>
+    <!-- Download app section end -->
+
+    <!--Footer start -->
+    <app-footer></app-footer>
+    <!--Footer end -->
+</div>

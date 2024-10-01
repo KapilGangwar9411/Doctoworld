@@ -1,0 +1,89 @@
+<div class="book_an_appointment">
+
+    <div class="card px-4 py-4 col-12 col-md-6 col-lg-7 mx-auto ">
+        <h2 class="pb-4 pt-2 ">{{'book_an_appointment' | translate}}</h2>
+
+        <form *ngIf="!isLoading">
+            <div class="selectDateTime">
+                <div class="d-flex card_header">
+                    <h2 class="d-flex align-items-center">{{'select_date' | translate}}</h2>
+                    <div class="from_inner end">
+                        <div class="form-group select_box animate__animated animate__fadeInUp wow">
+                            <div class="form-group-inner d-flex align-items-center">
+                                <select class="form-select end" id="inlineFormSelectPref" name="countryCode" [value]="monthSelected" [(ngModel)]="monthSelected" placeholder="Select month" (change)="changeMonth()">
+                                    <option *ngFor="let myDate of datesTimesData" [value]="myDate.month">
+                                        {{myDate.monthText}}
+                                    </option>
+                                </select>
+
+                                <i class="zmdi zmdi-caret-down end"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="datesTimesData[indexMonthSelected] && datesTimesData[indexMonthSelected].datesData && datesTimesData[indexMonthSelected].datesData.length" class="from_inner">
+                    <div *ngFor="let dateData of datesTimesData[indexMonthSelected].datesData; let i = index" class="form-group">
+                        <div class="form-check" (click)="markSelectedDate(i)">
+                            <input class="form-check-input" type="radio" id="{{i}}_select_date" [value]="i" [(ngModel)]="indexDateSelected" name="{{i}}_select_date">
+                            <label class="form-check-label" for="{{i}}_select_date">
+                                <span>{{ weekDays[dateData.date.getDay()] | translate }} </span>{{
+                                dateData.date.getDate()}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <h2 *ngIf="datesTimesData && datesTimesData[indexMonthSelected] && datesTimesData[indexMonthSelected].datesData && datesTimesData[indexMonthSelected].datesData.length" class="d-flex">{{'select_time' | translate}}
+                </h2>
+                <h3 *ngIf="!(datesTimesData && datesTimesData[indexMonthSelected] && datesTimesData[indexMonthSelected].datesData && datesTimesData[indexMonthSelected].datesData[indexDateSelected].times && datesTimesData[indexMonthSelected].datesData[indexDateSelected].times.length)">
+                    {{'unavailable_times' | translate}}
+                </h3>
+                <div *ngIf="datesTimesData && datesTimesData[indexMonthSelected] && datesTimesData[indexMonthSelected].datesData && datesTimesData[indexMonthSelected].datesData.length" class="from_inner select_time">
+                    <div *ngFor="let at of datesTimesData[indexMonthSelected].datesData[indexDateSelected].times; let i = index" class="form-group">
+                        <div class="form-check">
+                            <input [(ngModel)]="timeSelected" (click)="onTimeSelected(at.time)" class="form-check-input" type="radio" id="{{i}}_select_time" [value]="at.time" name="{{i}}_select_time">
+                            <label class="form-check-label" for="{{i}}_select_time">
+                                {{at.time}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div *ngIf="selectedDateTimeMoment">
+                <h2>{{'appointmnt_for' | translate}}</h2>
+                <div class="from_inner mx-auto">
+                    <div class="form-group ">
+                        <div class="form-group-inner d-flex align-items-center">
+                            <input type="text" name="reason" [(ngModel)]="appointmentReason" class="form-control" placeholder="e.g {{'heart_pain_body_ache_etc' | translate}}.">
+                        </div>
+                    </div>
+                </div>
+
+                <h2>{{'attach_document' | translate}} (eg photo, report.etc)</h2>
+                <div class="from_inner mx-auto">
+                    <div class="form-group attach_document">
+                        <div *ngIf="records.length == 0" class="form-group-inner d-flex align-items-center">
+                            <i class="zmdi zmdi-attachment-alt"></i>
+                            <input type="file" class="form-control" accept="" (change)="onImageChange($event)" placeholder="{{'attach_now' | translate}}.">
+                            <h3>{{'attach_now' | translate}}</h3>
+                        </div>
+                        <div *ngFor="let record of records; let i = index" class="form-group-inner d-flex align-items-center">
+                            <h3>{{record.title}}</h3>
+                            <div class="close_btn end" (click)="deleteRecord(i)">
+                                <i class="zmdi zmdi-close"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn" [disabled]="!selectedDateTimeMoment" (click)="createAppointment()">
+                {{'book_appointment' | translate}}
+            </button>
+        </form>
+    </div>
+</div>

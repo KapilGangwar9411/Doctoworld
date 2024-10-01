@@ -1,0 +1,53 @@
+<div class="body_wrapper position-relative pt-2">
+    <section class="themePadding pt-4">
+        <div class="pageTitle">
+            <div class="container position-relative">
+                <h1 class="text-center py-lg-3 text-md-start">
+                    &nbsp;
+                </h1>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row g-0">
+                <div class="col-12">
+                    <div class="card pt-3 border-0 col-12 mx-auto">
+                        <form class="col-12 col-md-11 mx-auto px-3">
+                            <div class="row g-0 align-items-center pb-3 pb-lg-3" style="min-height: 91px;">
+                                <div class="col-12 col-md-12 pb-4 pb-md-0 pt-3">
+                                    <h2 class="m-0 pb-3 animate__animated animate__fadeInUp wow">
+                                        {{'support' | translate}}
+                                    </h2>
+                                    <p class="animate__animated animate__fadeInUp wow">
+                                        {{'let_us_know_your_feedback_queies_or_isssue_regarding_app_of_feature' | translate}}.
+                                    </p>
+                                </div>
+                            </div>
+                            <form class="col-12 col-md-12 px-0 pt-3 animate__animated animate__fadeInUp wow">
+                                <div class="from_inner">
+                                    <div class="form-group ">
+                                        <label>{{'your_feedback' | translate}}</label>
+                                        <div class="form-group-inner d-flex align-items-center">
+                                            <textarea rows="3" type="text" class="form-control" name="message" [(ngModel)]="supportRequest.message" placeholder="{{'your_message' | translate}}" style="line-height: 22px !important; padding-top: 10px !important; padding-bottom: 10px !important;"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex mt-5 animate__animated animate__fadeInUp wow">
+                                        <button class="btn rounded-pill end" (click)="submit()">
+                                            {{'submit' | translate}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Download app section start -->
+    <app-download-our-app> </app-download-our-app>
+    <!-- Download app section end -->
+
+    <!--Footer start -->
+    <app-footer></app-footer>
+    <!--Footer end -->
+</div>

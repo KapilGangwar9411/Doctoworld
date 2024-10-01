@@ -1,0 +1,17 @@
+<!-- <div *ngIf="!(banners && banners.length)" class="offers_slider row  py-5 g-0">
+    <div class="banner_space d-none"></div>
+    <owl-carousel-o [options]="bannerCarousel">
+        <ng-template *ngFor="let banner of [1,2,3,4]" carouselSlide>
+            <img src="assets/images/empty_image.png" class="placeholder">
+           
+        </ng-template>
+    </owl-carousel-o>
+</div> -->
+<div *ngIf="banners && banners.length" class="offers_slider row  py-5 g-0">
+    <div class="banner_space d-none"></div>
+    <owl-carousel-o [options]="bannerCarousel">
+        <ng-template *ngFor="let banner of banners" carouselSlide>
+            <img [src]="banner.image">
+        </ng-template>
+    </owl-carousel-o>
+</div>

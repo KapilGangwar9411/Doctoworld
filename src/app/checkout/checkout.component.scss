@@ -1,0 +1,129 @@
+form {
+    .card {
+        margin-bottom: 8.5px;
+        overflow: hidden;
+        .card_header {
+            padding: 15px 0;
+            margin-bottom: 10px;
+            h2 {
+                margin: 0;
+                color: var(--text-dark);
+                font-size: 1.65rem;
+            }
+        }
+        .card_content {
+            h2 {
+                margin: 0;
+                color: var(--text-black);
+                font-weight: 500;
+                font-size: 1rem;
+                padding-bottom: 30px;
+                span {
+                    min-width: fit-content;
+                    color: var(--primary);
+                    font-size: .8rem;
+                    font-weight: 500;
+                    cursor: pointer;
+                }
+            }
+            .form-group {
+                margin-bottom: 25px;
+                .form-group-inner {
+                    border-radius: 0;
+                    min-width: fit-content;
+                    box-shadow: none !important;
+                    padding: 0;
+                    background: var(--bg-white);
+                }
+            }
+        }
+        &.deliver_address {
+            .form-group {
+                .form-group-inner {
+                    i {
+                        color: var(--primary);
+                        font-size: 1.3rem;
+                        min-width: 32px;
+                        display: block;
+                        margin: 0;
+                    }
+                    .text-box {
+                        h3 {
+                            margin: 0;
+                            color: var(--text-black);
+                            font-weight: 500;
+                            font-size: .9rem;
+                            padding-bottom: 4px;
+                            padding-top: 1px;
+                        }
+                        p {
+                            font-weight: 400;
+                            color: var(--text-light);
+                            font-size: 0.8rem;
+                            margin: 0;
+                        }
+                    }
+                }
+            }
+        }
+        &.item_summery {
+            ul {
+                padding: 0;
+                // min-height: 270px;
+                li {
+                    display: flex;
+                    align-items: flex-start;
+                    border: 0;
+                    border-radius: 0;
+                    padding: 0px 0;
+                    padding-bottom: 20px;
+                    .text_box {
+                        width: 100%;
+                        h2 {
+                            margin: 0;
+                            color: var(--text-black);
+                            font-size: .85rem;
+                            font-weight: 600;
+                            padding-bottom: 7px;
+                        }
+                        h3 {
+                            margin: 0;
+                            color: var(--text-light);
+                            font-weight: 400;
+                            font-size: 0.7rem;
+                        }
+                    }
+                    h5 {
+                        margin: 0;
+                        color: var(--text-black);
+                        font-size: .85rem;
+                        font-weight: 500;
+                        min-width: fit-content;
+                    }
+                }
+            }
+        }
+        &.amount_info {
+            h3 {
+                margin: 0;
+                color: var(--text-black);
+                font-size: 0.85rem;
+                font-weight: 600;
+                padding-bottom: 10px;
+                line-height: 22px;
+                span {
+                    min-width: fit-content;
+                    font-weight: 500;
+                }
+                &:last-child {
+                    padding-bottom: 0;
+                }
+            }
+        }
+    }
+}
+
+button.btn {
+    text-transform: uppercase !important;
+    letter-spacing: 1.5px;
+}

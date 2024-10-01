@@ -1,0 +1,40 @@
+.list-group {
+    border-radius: 0;
+    border: 0;
+    padding: 15px 0;
+    li {
+        border: 0;
+        padding: 15px 0px;
+        h2 {
+            margin: 0;
+            color: var(--text-black);
+            font-size: 1.1rem;
+            padding-bottom: 8px;
+        }
+        h3 {
+            margin: 0;
+            color: #7dca24;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.8rem;
+            min-width: fit-content;
+            padding-bottom: 5px;
+            i {
+                font-size: 0.85rem;
+                min-width: 17px;
+            }
+            span {
+                font-weight: 400;
+                color: var(--text-light);
+                min-width: fit-content;
+            }
+        }
+        p {
+            margin: 0;
+            color: var(--text-dark2);
+            font-size: .8rem;
+            line-height: 26px;
+            padding-bottom: 0;
+        }
+    }
+}

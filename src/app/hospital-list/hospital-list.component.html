@@ -1,0 +1,170 @@
+<div class="body_wrapper">
+    <!-- Banner section start -->
+
+    <div class="banner">
+        <div class="mainBanner position-relative z-3 pt-5">
+            <div class="container position-relative z-3 pt-3">
+                <div class="row gap-0 align-items-center position-relative z-3">
+                    <div class="col-12 col-lg-8 pb-5 mb-3">
+                        <form class="col-12 col-lg-12 px-0" role="search">
+                            <div class="form-group search_box mb-0">
+                                <div class="form-group-inner d-flex align-items-center mb-0">
+                                    <input type="search" class="form-control" name="searchHospital" [(ngModel)]="searchHospital" (keyup.enter)="onSearchbarChange()" placeholder="{{'search_hospital' | translate}}">
+                                    <button class="btn" type="submit" (click)="onSearchbarChange()">
+                                        <i class="zmdi zmdi-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- <div class="col-12 col-lg-4 pb-5 mb-3 text-center" style="overflow:visible  !important">
+                        <form class="filter_sort_by col-12 col-lg-12 px-0" role="search">
+                            <div class="form-group search_box mb-0" style="overflow:visible  !important">
+                                <div class="form-group-inner d-flex align-items-center mb-0">
+                                    <div class="customDropdown align-items-center">
+                                        <h2 class="d-flex align-items-center">{{'filter' | translate}}
+                                            <i class="zmdi zmdi-chevron-down end ion-text-end"></i>
+                                        </h2>
+                                    </div>
+                                    <div class="customDropdownSpace"></div>
+
+                                    <div class="customDropdown align-items-center" [ngClass]="showMoreOpction1 ? 'showMoreOpction1 active' : 'showMoreOpction1'" (click)="showMoreOpctionToggle1()">
+                                        <h2 class="d-flex align-items-center">{{'sort_by' | translate}}
+                                            <i class="zmdi zmdi-chevron-down end ion-text-end"></i>
+                                        </h2>
+
+                                        <div class="overlay" (click)="cloesDropDown()">
+                                        </div>
+
+                                        <div class="customDropdownOption">
+                                            <h3 (click)="cloesDropDown()">
+                                                Price: Low to High
+                                            </h3>
+                                            <h3 (click)="cloesDropDown()">
+                                                Price: High to Low
+                                            </h3>
+                                            <h3 (click)="cloesDropDown()">
+                                                Avg. Custome Review
+                                            </h3>
+                                            <h3 (click)="cloesDropDown()">
+                                                Area. Nearest
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <!-- Features section start -->
+    </div>
+    <!-- Banner section end -->
+
+    <!-- List of Specialties section start -->
+    <section class="themePadding py-0">
+        <div class="container">
+            <div *ngIf="isLoading && !(hospitals && hospitals.length)" class="row g-5">
+                <div class="col-12 col-lg-6 placeholder-glow">
+                    <div class="sectionHeader pt-5 placeholder-wave">
+                        <h2 class="text-center text-lg-start placeholder">$nbsp; $nbsp;$nbsp;$nbsp;$nbsp;</h2>
+                    </div>
+
+                    <div class="vendorList">
+                        <div *ngFor="let hospital of [1,2,3,4,5,6,7,8,9]" class="media d-block">
+                            <div class="media-body">
+                                <div class="media-header d-flex align-items-center">
+                                    <div class="img_box center_img placeholder-wave">
+                                        <img src="assets/images/empty_image.png" class="crop_img placeholder">
+                                    </div>
+                                    <div class="text_box placeholder-wave">
+                                        <h2 class="placeholder">$nbsp; $nbsp;$nbsp;</h2>
+                                        <h3 class="placeholder">$nbsp; $nbsp;$nbsp;</h3>
+                                    </div>
+                                </div>
+                                <h3 class="d-flex placeholder">
+                                    <i class="zmdi zmdi-pin text-start"></i> $nbsp; $nbsp;$nbsp;
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div *ngIf="isLoading && !(hospitals && hospitals.length)"
+                class="custome_spinner justify-content-center empty_view">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <h6>{{'loading' | translate}}...</h6>
+            </div> -->
+            <div *ngIf="!isLoading && !(hospitals && hospitals.length)" class="empty_view">
+                <img src="assets/images/empty_categories.png" class="img-fluid">
+                <h6>{{'empty_results' | translate}}</h6>
+            </div>
+            <div *ngIf="hospitals && hospitals.length" class="row g-5">
+                <div class="col-12 col-lg-6">
+                    <!-- <div class="sectionHeader pt-5">
+                        <h2 class="text-center text-lg-start">45 General Hospital found</h2>
+                    </div> -->
+                    <div *ngIf="(category && category.id)" class="sectionHeader pt-5">
+                        <h2 class="text-center text-lg-start">{{category.title}}</h2>
+                    </div>
+
+                    <div class="vendorList">
+                        <div *ngFor="let hospital of hospitals | paginate: { itemsPerPage: pageSize, currentPage: pageNo }" class="media d-block" (click)="navHospitalInfo(hospital)">
+                            <div class="media-body">
+                                <div class="media-header d-flex align-items-center">
+                                    <div *ngIf="hospital && hospital.images && hospital.images.length" class="img_box center_img">
+                                        <img [src]="hospital.images[0]" class="crop_img">
+                                    </div>
+                                    <div class="text_box">
+                                        <h2>{{hospital.name}}</h2>
+                                        <h3>{{hospital.tagline}}</h3>
+                                    </div>
+                                </div>
+                                <h3 class="d-flex">
+                                    <i class="zmdi zmdi-pin text-start"></i> {{hospital.address}}
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-12 col-lg-6">
+                    <div class="map center_img">
+                        <app-map-view *ngIf="!isLoading" [hospitals]="hospitals"></app-map-view>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="pagination-container">
+        <div class="container" *ngIf="pageTotal > pageSize">
+            <div class="row align-items-center">
+                <div class="col-12 col-md-6">
+                    <h2 class="text-center text-md-start pb-3 pb-md-0">
+                        {{'showing' | translate}} {{pageNo}} {{'to' | translate}} {{pageSize}} {{'of' | translate}} {{pageTotal}} {{'items' | translate}}
+                    </h2>
+                </div>
+                <div class="col-12 col-md-6 d-flex">
+                    <nav class="end" aria-label="Page navigation example">
+                        <nav class="navigation col-12" aria-label="Page navigation example">
+                            <pagination-controls [responsive]="isResponsive" [previousLabel]="'prev' | translate" [nextLabel]="'next' | translate" (pageChange)="onChangePage($event)">
+                            </pagination-controls>
+                        </nav>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Download app section start -->
+    <app-download-our-app> </app-download-our-app>
+    <!-- Download app section end -->
+
+    <!--Footer start -->
+    <app-footer></app-footer>
+    <!--Footer end -->
+</div>

@@ -1,0 +1,157 @@
+<div class="body_wrapper">
+    <section class="themePadding pt-3 pb-0">
+        <div class="container">
+            <form>
+                <div class="row g-2">
+                    <div class="col-12 col-lg-6">
+                        <div class="card deliver_address rounded-0 border-0 py-4 px-lg-3 p">
+                            <div class="card_header col-11 col-md-10 mx-auto px-0">
+                                <h2>{{'checkout' | translate}}</h2>
+                            </div>
+                            <div class="card_content col-11 col-md-10 mx-auto px-0">
+                                <h2 class="d-flex">{{'deliver_address' | translate}}
+                                    <span class="end" (click)="pickLocation()">
+                                        {{(addressSelected && addressSelected.id ? 'change' : 'pick') | translate}}
+                                    </span>
+                                </h2>
+                                <div class="form-group animate__animated animate__fadeInUp wow">
+                                    <div class="form-group-inner d-flex px-0 align-items-start">
+                                        <i *ngIf="addressSelected && addressSelected.id" class="zmdi zmdi-home"></i>
+                                        <div class="text-box w-100">
+                                            <h3 *ngIf="addressSelected && addressSelected.id">
+                                                {{addressSelected!.title && addressSelected!.title.length ? addressSelected!.title : addressSelected!.formatted_address}}
+                                            </h3>
+                                            <h3 *ngIf="!(addressSelected && addressSelected.id)">
+                                                {{'services_location_select' | translate}}
+                                            </h3>
+                                            <p *ngIf="addressSelected && addressSelected.id">
+                                                {{addressSelected!.formatted_address}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card rounded-0 border-0 py-4 px-lg-3 pb-5">
+                            <div class="card_content col-11 col-md-10 mx-auto px-0">
+                                <h2>{{'payment_method' | translate}} </h2>
+                                <!-- <div *ngIf="isLoadingPayments && !(paymentMethods && paymentMethods.length)" class="custome_spinner justify-content-center">
+                                    <div class="spinner-border" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    <h6>{{'loading' | translate}}...</h6>
+                                </div> -->
+                                <div *ngIf="!isLoadingPayments && !(paymentMethods && paymentMethods.length)" class="empty_view">
+                                    <img src="assets/images/empty_address.png" class="img-fluid">
+                                    <h6>{{'no_payments' | translate}}</h6>
+                                </div>
+                                <div *ngFor="let pg of paymentMethods" class="form-group animate__animated animate__fadeInUp wow" (click)="onPaymentClick(pg)">
+                                    <div class="form-group-inner px-0">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" id="{{pg.id}}" value="{{pg.id}}" [(ngModel)]="pdIdSelected" name="payment_method">
+                                            <label class="form-check-label" for="{{pg.id}}">
+                                                {{pg.title}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex animate__animated animate__fadeInUp wow">
+                                    <button class="btn rounded-pill mt-3 end" (click)="proceedPlacement()">
+                                        {{'confirm' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                        <div class="card item_summery rounded-0 border-0">
+                            <div class=" py-4 px-lg-3 pb-5">
+                                <div class="card_header col-11 col-md-10 mx-auto px-0">
+                                    <h2>{{'order_summary' | translate}}</h2>
+                                </div>
+                                <div *ngIf="!eComService.getCartItems().length" class="empty_view">
+                                    <img src="assets/images/empty_orders.png" class="img-fluid">
+                                    <h6>{{'empty_cart' | translate}}</h6>
+                                </div>
+                                <div *ngIf="eComService.getCartItems().length" class="card_content col-11 col-md-10 mx-auto px-0">
+                                    <ul class="list-group">
+                                        <li *ngFor="let ci of eComService.getCartItems(); let i = index" class="list-group-item animate__animated animate__fadeInUp wow">
+                                            <div class="text_box">
+                                                <h2>{{ci.title}} ({{ci.quantity}})</h2>
+                                                <h3>{{ci.subtitle}}</h3>
+                                            </div>
+                                            <h5 class="end">{{currencyIcon}}{{ci.total}}</h5>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+
+                            <div *ngIf="eComService.getCartItems().length" class="card amount_info rounded-0 border-0 py-4  pb-4" style="border-top: 1.5px dashed var(--border-color) !important;">
+                                <div class="card_content col-11 col-md-10 mx-auto px-0  px-lg-3">
+                                    <h3 class="d-flex animate__animated animate__fadeInUp wow">
+                                        {{'cart_total' | translate}}
+                                        <span class="end">{{currencyIcon}}{{eComService.getCartItemsTotal(true)}}</span>
+                                    </h3>
+                                    <h3 *ngFor="let ec of eComService.getExtraCharges()" class="d-flex animate__animated animate__fadeInUp wow">
+                                        {{ec.id! | translate}}
+                                        <span class="end">
+                                            {{currencyIcon}}{{eComService.calculateExtraChargePiceToShow(ec, true)}}
+                                        </span>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="card amount_info  amount_to_pay rounded-0 border-0 py-4 px-lg-3 pb-4" style="border-top: 1.5px dashed var(--border-color) !important;">
+                                <div class="card_content col-11 col-md-10 mx-auto px-0 animate__animated animate__fadeInUp wow">
+                                    <h3 class="d-flex" style="color: var(--primary); font-size: .9rem;">
+                                        {{'amount_to_pay' | translate}}
+                                        <span class="end fw-semibold">
+                                            {{currencyIcon}}{{eComService.getCartTotal(true)}}
+                                        </span>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div *ngIf="eComService.getCartItems().length" class="card amount_info rounded-0 border-0 py-4 px-lg-3 pb-4">
+                            <div class="card_content col-11 col-md-10 mx-auto px-0">
+                                <h3 class="d-flex animate__animated animate__fadeInUp wow">
+                                    {{'cart_total' | translate}}
+                                    <span class="end">{{currencyIcon}}{{eComService.getCartItemsTotal(true)}}</span>
+                                </h3>
+                                <h3 *ngFor="let ec of eComService.getExtraCharges()" class="d-flex animate__animated animate__fadeInUp wow">
+                                    {{ec.id! | translate}}
+                                    <span class="end">
+                                        {{currencyIcon}}{{eComService.calculateExtraChargePiceToShow(ec, true)}}
+                                    </span>
+                                </h3>
+                            </div>
+                        </div> -->
+                        <!-- <div class="card amount_info  amount_to_pay rounded-0 border-0 py-4 px-lg-3 pb-4">
+                            <div class="card_content col-11 col-md-10 mx-auto px-0 animate__animated animate__fadeInUp wow">
+                                <h3 class="d-flex" style="color: var(--primary); font-size: .9rem;">
+                                    {{'amount_to_pay' | translate}}
+                                    <span class="end fw-semibold">
+                                        {{currencyIcon}}{{eComService.getCartTotal(true)}}
+                                    </span>
+                                </h3>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+
+    <!-- Download app section start -->
+    <app-download-our-app> </app-download-our-app>
+    <!-- Download app section end -->
+
+    <!--Footer start -->
+    <app-footer></app-footer>
+    <!--Footer end -->
+</div>

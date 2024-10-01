@@ -1,0 +1,354 @@
+.card {
+    background: var(--bg-white);
+    box-shadow: none;
+    border-radius: 15px;
+    border: 0;
+    margin-bottom: 10px;
+    .itemImg {
+        display: flex;
+        align-items: center;
+        min-height: 160px;
+        img {
+            max-width: 150px;
+            height: 180px;
+        }
+    }
+    .text_box {
+        h2 {
+            margin: 0;
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            font-weight: 500;
+            padding-bottom: 15px;
+            img {
+                display: block;
+                width: 18px;
+                max-width: 18px;
+            }
+        }
+        h3 {
+            margin: 0;
+            color: var(--text-light);
+            font-weight: 400;
+            font-size: 0.9rem;
+        }
+        h4 {
+            margin: 0;
+            color: var(--yelow-color);
+            font-size: 1.0rem;
+            font-weight: 600;
+            i {
+                font-size: 1.2rem;
+                min-width: 20px;
+            }
+            span {
+                color: var(--text-light);
+                min-width: fit-content;
+                font-weight: 400;
+            }
+        }
+        h5 {
+            margin: 0;
+            color: var(--text-dark);
+            font-size: 1.0rem;
+            font-weight: 400;
+        }
+    }
+    &.availability {
+        .vendorList {
+            border-bottom: 2px dashed var(--border-color);
+            padding-bottom: 0 !important;
+            margin-bottom: 25px;
+            cursor: unset;
+            &:last-child {
+                margin-bottom: 0 !important;
+                padding-bottom: 0 !important;
+                border-bottom: 0 !important;
+            }
+            .list-group {
+                li {
+                    padding: 10px 0px;
+                    cursor: unset;
+                    h3 {
+                        color: var(--text-light);
+                        font-size: 0.85rem;
+                        font-weight: 400;
+                        padding: 0;
+                        cursor: unset !important;
+                        span {
+                            min-width: fit-content;
+                            color: var(--text-dark);
+                            font-size: 1.1rem;
+                            font-weight: 500;
+                            display: flex;
+                            align-items: center;
+                            small {
+                                color: var(--text-light);
+                                font-size: 0.85rem;
+                                font-weight: 400;
+                                padding: 0 10px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.nav {
+    padding: 0;
+    background: var(--bg-color);
+    border-radius: 15px 15px 0 0;
+    overflow: hidden;
+    .nav-item {
+        cursor: pointer;
+        position: relative;
+        min-width: 140px;
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-white);
+            opacity: 0;
+            transition: all .5s;
+        }
+        .nav-link {
+            display: block;
+            position: relative;
+            z-index: 99;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            font-weight: 400;
+            padding: 13px 15px;
+            text-align: center;
+            letter-spacing: .5px;
+        }
+        &.active {
+            &::before {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.tab_content {
+    .card {
+        border-radius: 0 0px 15px 15px;
+        p {
+            margin: 0;
+            color: var(--text-dark2);
+            font-size: 0.9rem;
+            line-height: 30px;
+            padding-bottom: 25px;
+        }
+        .vendorList {
+            h3 {
+                color: var(--text-light);
+                font-size: 0.85rem;
+                font-weight: 400;
+                padding-bottom: 10px;
+            }
+            .media {
+                box-shadow: none !important;
+                padding: 0 !important;
+                transform: none !important;
+                cursor: unset !important;
+                .img_box {
+                    min-width: 95px;
+                    height: 95px;
+                }
+            }
+            &.services_at {
+                .media {
+                    .media-body {
+                        h5 {
+                            color: var(--text-light2);
+                            font-weight: 400;
+                            font-size: 0.9rem;
+                            i {
+                                font-size: 1.5rem;
+                                min-width: fit-content;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &.departments {
+            .accordion {
+                border: 0;
+                background: none;
+                .accordion-item {
+                    border: 0;
+                    border-bottom: 10px solid var(--bg-color);
+                    background: none;
+                    h2 {
+                        button {
+                            border: 0;
+                            background: none !important;
+                            box-shadow: none !important;
+                            color: var(--text-dark);
+                            font-size: 1.1rem;
+                            font-weight: 500;
+                            padding: 0;
+                            &::after {
+                                display: none !important;
+                            }
+                            i {
+                                min-width: fit-content;
+                                font-size: 2rem;
+                                transition: all .4s;
+                                &::before {
+                                    display: block;
+                                    transition: all .4s;
+                                }
+                            }
+                            &[aria-expanded="true"] {
+                                i {
+                                    &::before {
+                                        transform: rotate(180deg);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    &:last-child {
+                        border-bottom: 0 !important;
+                    }
+                }
+            }
+            .vendorList {
+                .media {
+                    padding: 20px 0 !important;
+                    .img_box {
+                        min-width: 80px;
+                        height: 95px;
+                        border-radius: 6px;
+                    }
+                    .media-body {
+                        width: 100%;
+                        h2 {
+                            padding-bottom: 10px;
+                        }
+                        h3 {
+                            margin: 0;
+                            color: var(--text-light2);
+                            font-size: 0.8rem;
+                            overflow: hidden;
+                            display: -webkit-box;
+                            -webkit-line-clamp: 2;
+                            -webkit-box-orient: vertical;
+                            min-height: 40px;
+                            font-weight: 500;
+                            span {
+                                font-size: 0.73rem;
+                                font-weight: 400;
+                                color: var(--text-light);
+                            }
+                        }
+                        .row {
+                            h2 {
+                                margin: 0;
+                                font-size: 0.73rem;
+                                font-weight: 400;
+                                color: var(--text-light2);
+                                display: flex;
+                                align-content: center;
+                                padding: 0;
+                                align-content: center;
+                                strong {
+                                    color: var(--text-black);
+                                    font-weight: 500;
+                                }
+                                i {
+                                    color: #dddddd;
+                                    font-size: 0.8rem;
+                                    &.active {
+                                        color: var(--yelow-color);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.book_an_appointment {
+    .card {
+        .card_banner {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            .img-box {
+                width: 100%;
+                height: 250px;
+                border-radius: 12px;
+            }
+            .address_box {
+                position: absolute;
+                bottom: 40px;
+                left: 0;
+                right: 0;
+                width: 100%;
+                height: -moz-fit-content;
+                height: fit-content;
+                padding: 20px;
+                z-index: 99;
+                background: linear-gradient(0deg, rgb(0 0 0 / 64%) 0%, rgba(0, 0, 0, 0) 100%);
+                border-radius: 0 0 12px 12px;
+                h3 {
+                    margin: 0;
+                    color: var(--text-white);
+                    font-size: 1rem;
+                    font-weight: 500;
+                    padding-bottom: 0 !important;
+                }
+                h2 {
+                    margin: 0;
+                    color: var(--text-white);
+                    font-weight: 400;
+                    font-size: 0.9rem;
+                    opacity: .8;
+                    span {
+                        color: var(--text-dark);
+                        font-weight: 500;
+                        min-width: fit-content;
+                    }
+                }
+            }
+        }
+        form {
+            .map {
+                width: 100%;
+                height: 200px;
+                border-radius: 12px;
+                position: relative;
+                overflow: hidden;
+                .pin {
+                    position: absolute;
+                    z-index: 99;
+                    cursor: pointer;
+                    img {
+                        width: 25px;
+                    }
+                }
+            }
+        }
+        button.btn {
+            visibility: visible;
+            width: 100%;
+            border-radius: 9px;
+            letter-spacing: 0;
+            text-transform: unset;
+            font-weight: 400;
+            font-size: .95rem !important;
+        }
+    }
+}

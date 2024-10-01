@@ -1,0 +1,50 @@
+.card {
+    .card_content {
+        h2 {
+            margin: 0;
+            color: var(--text-dark);
+            font-size: 1.75rem;
+            line-height: 40px;
+            padding-bottom: 20px;
+        }
+        p {
+            margin: 0;
+            color: var(--text-dark);
+            font-size: .9rem;
+            padding-bottom: 42px;
+        }
+    }
+}
+
+button.btn {
+    text-transform: uppercase !important;
+    letter-spacing: 1.5px;
+    overflow: hidden;
+    width: 100%;
+    &.my_orders {
+        position: relative;
+        background: none !important;
+        display: block;
+        width: 100%;
+        box-shadow: none !important;
+        span {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            opacity: .2;
+        }
+    }
+}
+
+.themePadding {
+    padding-top: 20px !important;
+    padding-bottom: 30px!important;
+}

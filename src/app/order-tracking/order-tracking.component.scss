@@ -1,0 +1,105 @@
+.track_order {
+    position: relative;
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+    .header {
+        position: absolute;
+        top: 0;
+        z-index: 99;
+        background: var(--bg-white);
+        width: 100%;
+        min-height: 70px;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        i {
+            position: absolute;
+            font-size: 1.4rem;
+            color: var(--text-black);
+            cursor: pointer;
+        }
+        h2 {
+            margin: 0;
+            color: var(--text-black);
+            width: 100%;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+    }
+    .map {
+        min-height: 745px;
+        position: relative;
+        i {
+            color: var(--text-white);
+            background: var(--yelow-color);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            position: absolute;
+            text-align: center;
+            line-height: 45px;
+            font-size: 1.4rem;
+        }
+        img {
+            max-width: unset;
+        }
+    }
+    .deliveryBoy {
+        position: absolute;
+        z-index: 99;
+        img {
+            width: 45px;
+        }
+    }
+    .vendorList {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        z-index: 99;
+        width: 100%;
+        .media {
+            border-radius: 0;
+            padding: 15px 20px !important;
+            box-shadow: none !important;
+            transform: unset !important;
+            cursor: unset;
+            .img_box {
+                min-width: 50px;
+                height: 50px;
+                border-radius: 10px;
+            }
+            .media-body {
+                width: 100%;
+                padding-top: 0;
+                h2 {
+                    padding-bottom: 5px;
+                    .icon_box {
+                        cursor: pointer;
+                        min-width: fit-content;
+                        i {
+                            color: var(--primary);
+                            font-size: 1.2rem;
+                            min-width: 25px;
+                        }
+                    }
+                }
+                h3 {
+                    margin: 0;
+                    color: var(--text-light);
+                    font-size: 0.8rem;
+                    font-weight: 500;
+                    .icon_box {
+                        cursor: pointer;
+                        min-width: fit-content;
+                        i {
+                            color: var(--primary);
+                            font-size: 1.2rem;
+                            min-width: 25px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

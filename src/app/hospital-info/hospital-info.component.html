@@ -1,0 +1,162 @@
+<div class="body_wrapper">
+    <section class="itemRow pt-4 themePadding">
+        <div class="container">
+            <div class="row g-3">
+                <div class="col-12 col-lg-7 ">
+                    <div class="card px-4 py-4">
+                        <div class="row g-0 align-items-end px-2 py-2">
+                            <div class="text_box col-12 col-md-9">
+                                <h2 class="d-flex">
+                                    {{hospital.name}}
+                                </h2>
+                                <h3>{{hospital.tagline}}</h3>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- About & Reviews start -->
+
+                    <ul class="nav">
+                        <li class="nav-item" [ngClass]="selectedTab == 1 ? 'active' : '' " (click)="onChangePage(1)">
+                            <a class="nav-link">
+                                {{'about' | translate}}
+                            </a>
+                        </li>
+                        <li class="nav-item" [ngClass]="selectedTab == 2 ? 'active' : '' " (click)="onChangePage(2)">
+                            <a class="nav-link">
+                                {{'departments' | translate}}
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    <div class="tab_content">
+                        <!-- About section start -->
+                        <div class="p-5 py-4 card" *ngIf="selectedTab == 1">
+                            <p>{{hospital?.details}} </p>
+
+                            <div *ngIf="hospital && hospital.services" class="vendorList services_at">
+                                <h3>{{'services' | translate}}</h3>
+                                <div class="media">
+                                    <div class="media-body pt-0">
+                                        <h2 class="p-0 pb-3" *ngFor="let service of hospital.services">{{service.title}}
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- About section end -->
+
+                        <!-- Departments start -->
+                        <div class="card departments" *ngIf="selectedTab == 2">
+
+                            <div class="accordion" id="accordionExample">
+                                <div *ngFor="let sd of servicesDoctorsMap; let i = index" class="accordion-item p-5 py-4 pb-0">
+                                    <h2 class="accordion-header" id="heading_{{i}}">
+                                        <button class="accordion-button collapsed pb-4" type="button" data-bs-toggle="collapse" attr.data-bs-target="#collapse_{{i}}" aria-expanded="false" attr.aria-controls="collapse_{{i}}">
+                                            {{sd.service_title}}
+                                            <i class="zmdi zmdi-chevron-down ion-text-end end"></i>
+                                        </button>
+                                    </h2>
+                                    <div id="collapse_{{i}}" class="accordion-collapse collapse" attr.aria-labelledby="heading_{{i}}" data-bs-parent="#accordionExample">
+                                        <div class="vendorList">
+                                            <div class="media py-5" *ngFor="let doctor of sd.doctors" (click)="navDocProfile(doctor)">
+                                                <div *ngIf="doctor.user && doctor.user.image_url" class="img_box center_img">
+                                                    <img [src]="doctor.user.image_url" class="crop_img">
+                                                </div>
+
+                                                <div *ngIf="!doctor.user || !doctor.user.image_url" class="img_box center_img">
+                                                    <img src="assets/images/empty_dp.png" class="crop_img">
+                                                </div>
+                                                <div class="media-body">
+                                                    <h2>{{doctor.name}}</h2>
+                                                    <h3>{{doctor.specializations_text}}</h3>
+                                                    <div class="row g-0">
+                                                        <div class="col-4">
+                                                            <h2>
+                                                                {{'exp' | translate}}&nbsp;
+                                                                <strong>{{doctor.experience_years}}
+                                                                    {{'years' | translate}}</strong>
+                                                            </h2>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <h2>{{'fees' | translate}}&nbsp;
+                                                                <strong>{{currencyIcon}}{{doctor.consultancy_fee}}</strong>
+                                                            </h2>
+                                                        </div>
+
+                                                        <div class="d-flex col-5">
+
+                                                            <h2 class="">
+                                                                <i [ngClass]="doctor.ratings>=1 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'"></i>
+                                                                <i [ngClass]="doctor.ratings>=2 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'"></i>
+                                                                <i [ngClass]="doctor.ratings>=3 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'"></i>
+                                                                <i [ngClass]="doctor.ratings>=4 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'"></i>
+                                                                <i [ngClass]="doctor.ratings>=5 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'"></i>
+                                                                <strong>&nbsp; ({{doctor.ratings_count}})</strong>
+                                                            </h2>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- Departments end -->
+
+                    </div>
+                    <!-- About & Reviews end -->
+                </div>
+
+
+                <div class="col-12 col-lg-5">
+                    <div class="book_an_appointment">
+                        <div class="card px-4 py-4">
+                            <div class="card_banner">
+                                <owl-carousel-o [options]="cardBannerCarousel">
+                                    <ng-template *ngFor="let image of hospital.images" carouselSlide class="animate__animated animate__zoomIn wow">
+                                        <div class="img-box center_img">
+                                            <img [src]="image" class="crop_img">
+                                        </div>
+                                    </ng-template>
+                                </owl-carousel-o>
+                                <div class="address_box">
+                                    <h2 class="pb-2">{{'address' | translate}}</h2>
+                                    <h3 class="pb-4 ">{{hospital.address}}</h3>
+                                </div>
+                            </div>
+                            <form class="pt-4">
+
+
+                                <div class="map center_img mb-4 mt-2">
+                                    <img [src]="hos_map" class="crop_img">
+                                    <!-- <div class="pin" style="left: 40%; top: 30%;">
+                                        <img src="assets/images/icons/ic_hospital_pin2.png" class="img-fluid">
+                                    </div> -->
+                                </div>
+                                <button *ngIf="hospital && hospital.meta && hospital.meta.phone" class="btn mt-2">
+                                   {{'hospital_no' | translate}} ({{hospital.meta.phone}})
+                                    <!-- {{'contact_hospital' | translate}} -->
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Download app section start -->
+    <app-download-our-app> </app-download-our-app>
+    <!-- Download app section end -->
+
+    <!--Footer start -->
+    <app-footer></app-footer>
+    <!--Footer end -->
+</div>

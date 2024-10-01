@@ -1,0 +1,40 @@
+<!-- track order section start -->
+
+<div class="row g-0 d-flex">
+    <div class="col-12 col-md-6 col-xl-4 end">
+        <div class="track_order">
+            <div class="header d-flex">
+                <i class="zmdi zmdi-close" (click)="close()"></i>
+                <h2>{{'order_track' | translate}} #{{delivery.order_id}}</h2>
+            </div>
+            <div class="map center_img">
+                <div #map id="map" class="map">
+                </div>
+                <div #pleaseConnect id="please-connect">
+                </div>
+            </div>
+
+            <div class="vendorList">
+                <div class="media p-0">
+                    <div class="img_box center_img">
+                        <img [src]="delivery.delivery.user.image_url" class="crop_img">
+                    </div>
+                    <div class="media-body">
+                        <h2 class="d-flex">{{delivery.delivery.user.name}}
+                            <span class="icon_box end">
+                                <i class="zmdi zmdi-comment-alt-text text-end" (click)="navChat()"></i>
+                            </span>
+                        </h2>
+                        <h3 class="d-flex">{{'delivery_partner' | translate}}
+                            <span *ngIf="delivery && delivery.delivery && delivery.delivery.user && delivery.delivery.user.mobile_number" class="icon_box end">
+                                {{delivery.delivery.user.mobile_number}}
+                            </span>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- track order section start -->

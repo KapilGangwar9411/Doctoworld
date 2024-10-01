@@ -1,0 +1,63 @@
+.body-inner {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    min-height: 100vh;
+    background: var(--bg-color);
+    .bgAndLogo {
+        .logo {
+            img {
+                max-width: 270px;
+            }
+        }
+        .doctor_img {
+            // position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 9;
+            img {
+                // max-width: 350px;
+                display: block;
+                // margin: 0 auto;
+            }
+        }
+    }
+    .card {
+        margin: auto;
+        border-radius: 10px;
+        // position: absolute;
+        // width: calc(100% - 20px);  
+        padding: 44px 27px;
+        form {
+            h2 {
+                color: var(--text-dark);
+                font-weight: 600;
+                font-size: 1.2rem;
+                margin: 0;
+                display: flex;
+                align-items: center;
+                span {
+                    min-width: fit-content;
+                    font-size: 1.7rem;
+                    color: var(--text-black);
+                    cursor: pointer;
+                }
+            }
+        }
+        h5 {
+            position: absolute;
+            width: 100%;
+            max-width: calc(100% - 70px);
+            left: 0;
+            right: 0;
+            top: 24px;
+            margin: 0 auto;
+            font-size: .9rem;
+            color: var(--text-black);
+            span {
+                cursor: pointer;
+            }
+        }
+    }
+}

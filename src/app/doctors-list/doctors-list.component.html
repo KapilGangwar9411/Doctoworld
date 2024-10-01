@@ -1,0 +1,141 @@
+<div class="body_wrapper">
+    <!-- Banner section start -->
+    <div *ngIf="!(category && category.id)" class="banner">
+        <!-- Features section start -->
+        <div class="pageTitle">
+            <div class="container position-relative py-4 py-md-5 z-3">
+                <div class="row align-items-center w-100">
+                    <div class="col-12 col-md-6 g-0 col-xl-7">
+                        <h1 class="text-center py-lg-3 text-md-start pb-4 pb-md-0">
+                            {{'search' | translate}}
+                        </h1>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-5 d-flex">
+                        <form class="col-12 col-lg-10 px-0 end" data-wow-delay="0.5s" role="search">
+                            <div class="form-group search_box mb-0">
+                                <div class="form-group-inner d-flex align-items-center mb-0">
+                                    <input type="text" name="doctorQuery" class="form-control"
+                                        placeholder="{{'search_doctor' | translate}}" [(ngModel)]="doctorQuery" (keyup.enter)="onSearchbarChange()">
+                                    <button class="btn" type="submit" (click)="onSearchbarChange()">
+                                        <i class="zmdi zmdi-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Banner section end -->
+    <!-- List of Specialties section start -->
+
+
+    <section class="themePadding pt-0">
+        <div class="container">
+            <div *ngIf="isLoading && !(doctors && doctors.length)" class="row g-5 placeholder-glow">
+                <div class="col-12 col-lg-6 pt-5">
+                    <div class="sectionHeader pt-5 placeholder-wave">
+                        <h2 class="text-center text-lg-start placeholder">$nbsp; $nbsp;$nbsp;$nbsp;$nbsp;</h2>
+                    </div>
+        
+                    <div class="vendorList">
+                        <div *ngFor="let doctor of [1,2,3,4,5,6,7,8,9]" class="media pb-4">
+        
+                            <div class="img_box center_img placeholder-wave">
+                                <img src="assets/images/empty_image.png" class="crop_img placeholder">
+                            </div>
+        
+                            <div class="media-body placeholder-wave">
+                                <h2 class="placeholder">$nbsp; $nbsp;$nbsp;</h2>
+                                <h3 class="placeholder">$nbsp; $nbsp;$nbsp;</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div *ngIf="isLoading && !(doctors && doctors.length)" class="custome_spinner justify-content-center empty_view">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <h6>{{'loading' | translate}}...</h6>
+            </div> -->
+            <div *ngIf="!isLoading && !(doctors && doctors.length)" class="empty_view">
+                <img src="assets/images/empty_orders.png" class="img-fluid">
+                <h6>{{'empty_results' | translate}}</h6>
+            </div>
+            <div *ngIf="(doctors && doctors.length)" class="row g-5">
+                <div class="col-12 col-lg-6 pt-5">
+                    <div *ngIf="(category && category.id)" class="sectionHeader pt-5">
+                        <h2 class="text-center text-lg-start">{{category.title}}</h2>
+                    </div>
+
+                    <div class="vendorList">
+                        <div *ngFor="let doctor of doctors | paginate: { itemsPerPage: pageSize, currentPage: pageNo }" class="media pb-4" (click)="navDocProfile(doctor)">
+                            <div *ngIf="doctor.user && doctor.user.image_url" class="img_box center_img">
+                                <img [src]="doctor.user.image_url" class="crop_img">
+                            </div>
+
+                            <div *ngIf="!doctor.user || !doctor.user.image_url" class="img_box center_img">
+                                <img src="assets/images/empty_dp.png" class="crop_img">
+                            </div>
+
+                            <div class="media-body">
+                                <h2>{{doctor.name}}</h2>
+                                <h3>{{doctor.specializations_text}}
+                                    <!-- <span>{{'at' | translate}}</span> {{doctor.address}} -->
+                                </h3>
+                                <div class="row g-0">
+                                    <div class="col-4">
+                                        <h2>
+                                            {{'exp' | translate}}&nbsp;<strong>{{doctor.experience_years}}
+                                                {{'years' | translate}}</strong>
+                                        </h2>
+                                    </div>
+                                    <div class="col-3">
+                                        <h2>{{'fees' | translate}}&nbsp;<strong>{{currencyIcon}}{{doctor.fee}}</strong>
+                                        </h2>
+                                    </div>
+
+                                    <div class="d-flex col-5">
+                                        <h2 class="end">
+                                            <i [ngClass]="doctor.ratings>=1 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'"></i>
+                                            <i [ngClass]="doctor.ratings>=2 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'"></i>
+                                            <i [ngClass]="doctor.ratings>=3 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'"></i>
+                                            <i [ngClass]="doctor.ratings>=4 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'"></i>
+                                            <i [ngClass]="doctor.ratings>=5 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'"></i>
+                                            <strong>&nbsp; ({{doctor.ratings_count}})</strong>
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                    <app-map-view *ngIf="!isLoading" [doctors]="doctors"></app-map-view>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="pagination-container">
+        <div class="container" *ngIf="pageTotal > pageSize">
+            <div class="row align-items-center">
+                <div class="col-12 col-md-6">
+                    <h2 class="text-center text-md-start pb-3 pb-md-0">
+                        {{'showing' | translate}} {{pageNo}} {{'to' | translate}} {{pageSize}} {{'of' | translate}} {{pageTotal}} {{'items' | translate}}
+                    </h2>
+                </div>
+                <div class="col-12 col-md-6 d-flex">
+                    <nav class="end" aria-label="Page navigation example">
+                        <nav class="navigation col-12" aria-label="Page navigation example">
+                            <pagination-controls [responsive]="isResponsive" [previousLabel]="'prev' | translate" [nextLabel]="'next' | translate" (pageChange)="onChangePage($event)">
+                            </pagination-controls>
+                        </nav>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

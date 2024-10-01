@@ -1,0 +1,58 @@
+<div class="row g-0 d-flex">
+    <div class="col-12 col-md-6 col-xl-3 end">
+        <div class="send_to_bank">
+            <div class="header">
+                <div class="vendorList">
+                    <div class="media p-0">
+                        <div class="img_box center_img">
+                            <img [src]="chatObj.chatImage" class="crop_img">
+                        </div>
+                        <div class="media-body">
+                            <h2 class="d-flex">
+                                {{chatObj.chatName}}
+
+                                <i class="zmdi zmdi-close end" (click)="close()"></i>
+                            </h2>
+                            <h3 class="d-flex">
+                                {{chatObj.chatStatus}}
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <form class="px-0">
+                <div #myContent class="chat_container">
+                    <div *ngFor="let msg of messages" 
+                    [ngClass]="(chatObj.myId == msg.senderId) ? 'chat_box d-flex animate__animated animate__zoomIn send' : 'chat_box d-flex animate__animated animate__zoomIn received'">
+                        <div class="chat">
+                            <h2>{{msg.body}}</h2>
+                            <p>{{msg.timeDiff}}</p>
+                        </div>
+                    </div>
+
+                    <!-- <div class="chat_box d-flex animate__animated animate__zoomIn send">
+                        <div class="chat">
+                            <h2>Hello Doctor, <br>Yes i remember. <br> I will be there right on time</h2>
+                            <p>12:15 pm</p>
+                        </div>
+                    </div> -->
+                </div>
+
+
+                <div class="from_inner">
+                    <div class="form-group">
+                        <div class="form-group-inner">
+                            <textarea type="text" rows="2" class="form-control" name="newMessageText" [(ngModel)]="newMessageText" (keyup.enter)="send()" placeholder="{{'write_your_message' | translate}}"></textarea>
+                            <button class="btn end animate__animated animate__fadeInUp" (click)="send()">
+                                <i class="zmdi zmdi-mail-send"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

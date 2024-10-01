@@ -1,0 +1,46 @@
+section {
+    background-image: url('../../assets/images/download-app-bg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    h1 {
+        margin: 0;
+        color: var(--text-white);
+        font-weight: 600;
+        font-size: 2.5rem;
+        // font-size: 3.5rem;
+        letter-spacing: 0.5px;
+    }
+    p {
+        margin: 0;
+        color: var(--text-white);
+        // font-size: .95rem;
+        font-size: 0.8rem;
+        line-height: 25px;
+    }
+    button.btn {
+        padding: 0;
+        width: 190px;
+        min-width: unset !important;
+    }
+    .img_box {
+        position: relative;
+        &::before {
+            // content: "";
+            // position: absolute;
+            // left: 0;
+            // right: 0;
+            // top: -37px;
+            // margin: 0 auto; 
+            // height: 100%;
+            // width: 100%;
+            // border-radius: 50%;
+            // background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(43, 6, 207, 0) 64%);
+            // opacity: .8;
+        }
+        img {
+            position: relative;
+            z-index: 99;
+        }
+    }
+}

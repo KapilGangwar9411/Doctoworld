@@ -1,0 +1,166 @@
+<div class="body_wrapper">
+    <!-- Banner section start -->
+    <div class="banner">
+        <!-- Features section start -->
+        <div class="pageTitle">
+            <div class="container position-relative py-4 py-md-5 z-3">
+                <div class="row align-items-center w-100">
+                    <div class="col-12 col-md-6 g-0 col-xl-7">
+                        <h1 class="text-center py-lg-3 text-md-start pb-4 pb-md-0">
+                            {{'search' | translate}}
+                        </h1>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-5 d-flex">
+                        <form class="col-12 col-lg-10 px-0 end" data-wow-delay="0.5s" role="search">
+                            <div class="form-group search_box mb-0">
+                                <div class="form-group-inner d-flex align-items-center mb-0">
+                                    <input type="text" name="productQuery" class="form-control"
+                                        placeholder="{{'find_medicine' | translate}}" [(ngModel)]="productQuery">
+                                    <button class="btn" type="submit" (click)="onSearchSubmit()">
+                                        <i class="zmdi zmdi-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- category section start -->
+        <!-- <div class="category">
+            <div class="container">
+                <owl-carousel-o [options]="categoryCarousel">
+                    <ng-template carouselSlide class="animate__animated animate__zoomIn wow">
+                        <h3>
+                            <a class="d-flex align-items-center">
+                                Vegetables & Fruits
+                                <i class="zmdi zmdi-chevron-down text-end"></i>
+                            </a>
+                        </h3>
+                    </ng-template>
+                    <ng-template carouselSlide class="animate__animated animate__zoomIn wow">
+                        <h3>
+                            <a class="d-flex align-items-center">
+                                Cooking Essentials
+                                <i class="zmdi zmdi-chevron-down text-end"></i>
+                            </a>
+                        </h3>
+                    </ng-template>
+                    <ng-template carouselSlide class="animate__animated animate__zoomIn wow">
+                        <h3>
+                            <a class="d-flex align-items-center">
+                                Dairy Products
+                                <i class="zmdi zmdi-chevron-down text-end"></i>
+                            </a>
+                        </h3>
+                    </ng-template>
+                    <ng-template carouselSlide class="animate__animated animate__zoomIn wow">
+                        <h3>
+                            <a class="d-flex align-items-center">
+                                Drink & Baverages
+                                <i class="zmdi zmdi-chevron-down text-end"></i>
+                            </a>
+                        </h3>
+                    </ng-template>
+
+                    <ng-template carouselSlide class="animate__animated animate__zoomIn wow">
+                        <h3>
+                            <a class="d-flex align-items-center">
+                                Meat & Eggs
+                                <i class="zmdi zmdi-chevron-down text-end"></i>
+                            </a>
+                        </h3>
+                    </ng-template>
+
+                    <ng-template carouselSlide class="animate__animated animate__zoomIn wow">
+                        <h3>
+                            <a class="d-flex align-items-center">
+                                Personal Care
+                                <i class="zmdi zmdi-chevron-down text-end"></i>
+                            </a>
+                        </h3>
+                    </ng-template>
+                </owl-carousel-o>
+            </div>
+        </div> -->
+        <!-- category section end -->
+    </div>
+    <!-- Banner section end -->
+
+
+    <!-- Item section section start -->
+
+    <section class="itemRow themePadding" style="background: #fdfdfd">
+        <div class="sectionContent">
+            <div *ngIf="isLoading && !(products && products.length)" class="container">
+                <div class="row g-3">
+                    <div *ngFor="let cat of [1,2,3,4,5,6,7,8,9]"
+                        class="col-12 col-md-6 col-lg-3 col-xl-2 animate__animated animate__zoomIn wow">
+                        <div class="item px-4 placeholder-wave">
+                            <div class="itemImg">
+                                <img src="assets/images/empty_image.png" class="placeholder">
+                            </div>
+                            <div class="itemText">
+                                <h2 class="placeholder">$nbsp;</h2>
+                                <h4 class="d-flex align-items-center">
+                                    <strong class="placeholder">$nbsp;</strong>
+                                    <span class="end">
+                                        <i class="zmdi zmdi-plus placeholder"></i>
+                                    </span>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- <div *ngIf="isLoading && !(products && products.length)" class="custome_spinner justify-content-center empty_view">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <h6>{{'loading' | translate}}...</h6>
+            </div> -->
+            <div *ngIf="!isLoading && !(products && products.length)" class="empty_view">
+                <img src="assets/images/empty_orders.png" class="img-fluid">
+                <h6>{{'no_products' | translate}}</h6>
+            </div>
+            <div class="container">
+                <div class="row g-3">
+                    <div class="col-12 col-md-6 col-lg-3 col-xl-2 animate__animated animate__zoomIn wow"
+                        *ngFor="let product of products">
+                        <div class="item px-4">
+                            <div *ngIf="product.images && product.images.length" class="itemImg"
+                                (click)="medicine_info(product)">
+                                <img [src]="product.images[0]">
+                            </div>
+                            <div class="itemText">
+                                <h2 (click)="medicine_info(product)">{{product.title}}</h2>
+                                <h4 class="d-flex align-items-center">
+                                    {{product.priceToShow}}
+                                    <!-- <span class="end">
+                                        <i class="zmdi zmdi-plus"></i>
+                                    </span> -->
+                                    <span class="end"
+                                        *ngIf="!eComService.isExistsCartItem(eComService.genCartItemFromProduct(product))"
+                                        (click)="addProCart(product)">
+                                        <i class="zmdi zmdi-plus"></i>
+                                    </span>
+                                    <h6
+                                        *ngIf="eComService.isExistsCartItem(eComService.genCartItemFromProduct(product))">
+                                        <span (click)="removeCartItem(product)"><i class="zmdi zmdi-minus"></i></span>
+                                        <strong>{{eComService.getCartProductQuantity(getProductId(product))}}</strong>
+                                        <span (click)="addProCart(product)"><i class="zmdi zmdi-plus"></i></span>
+                                    </h6>
+
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Item section section end -->
+
+</div>

@@ -1,0 +1,208 @@
+<div class="body_wrapper">
+    <!-- Banner section start -->
+    <div class="banner">
+        <div class="mainBanner position-relative z-3 pt-5">
+            <div class="container position-relative z-3 pt-3">
+                <div class="row gap-0 align-items-end position-relative z-3">
+                    <div class="col-12 col-lg-6   pb-5 mb-3">
+                        <h1 class="h-font pb-4 text-center pt-5 pt-lg-0 text-lg-start an-1" innerHtml="{{'find_hospital_around_you' | translate}}"></h1>
+                        <p class="pb-5 text-center text-lg-start ">
+                            Discover hospitals near you with our easy-to-use website. Get quick access to essential healthcare services.
+                        </p>
+                        <form class="col-12 col-lg-10 px-0" role="search">
+                            <div class="form-group search_box mb-0">
+                                <div class="form-group-inner d-flex align-items-center mb-0">
+                                    <input type="search" class="form-control" name="doctor" [(ngModel)]="hospitalQuery" placeholder="{{'search_hospital' | translate}}" (keyup.enter)="navSearch()">
+                                    <button class="btn" type="submit" (click)="navSearch()">
+                                        <i class="zmdi zmdi-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- <div class="col-12 col-lg-6 text-center" style="overflow: hidden">
+                        <img src="assets/images/doctor_banner.png" class="img-fluid col-10 col-lg-12">
+                    </div> -->
+                </div>
+            </div>
+
+            <div class="banner_img">
+                <div class="row gap-0 align-items-end">
+                    <div class="col-12 col-lg-5">
+
+                    </div>
+                    <div class="col-12 col-lg-7 text-end">
+                        <img src="assets/images/hospital_banner.png" class="img-fluid w-100">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features section start -->
+
+
+        <!-- category section start -->
+        <div *ngIf="hostpitalsCategory && hostpitalsCategory.length" class="category">
+            <div class="container">
+                <owl-carousel-o [options]="categoryCarousel">
+                    <ng-template *ngFor="let category of hostpitalsCategory" carouselSlide class="animate__animated animate__zoomIn wow">
+                        <h3 (click)="navHosCategory(category)">
+                            <a class="d-flex align-items-center">
+                                {{category.title}}
+                                <!-- <i class="zmdi zmdi-chevron-down text-end"></i> -->
+                            </a>
+                        </h3>
+                    </ng-template>
+
+                </owl-carousel-o>
+            </div>
+        </div>
+        <!-- category section end -->
+    </div>
+    <!-- Banner section end -->
+
+
+    <!-- Map start end -->
+
+    <section *ngIf="hospitals && hospitals.length" class="find_on_map">
+        <app-map-view [hospitals]="hospitals"></app-map-view>
+    </section>
+    <!-- Map section end -->
+
+
+    <!-- Hospital List start -->
+    <section *ngIf="!(hospitals && hospitals.length)" class="vendorList themePadding placeholder-glow">
+        <div class="sectionContent py-2">
+            <div class="container">
+                <div class="row g-4">
+                    <div *ngFor="let hospital of [1,2,3,4,5,6,7,8,9]" class="col-12 col-md-6 col-xl-4 animate__animated animate__zoomIn wow">
+                        <div class="media d-block placeholder-wave">
+                            <div class="media-body">
+                                <div class="media-header d-flex align-items-center">
+                                    <div class="img_box center_img placeholder">
+                                        <img src="assets/images/empty_image.png" class="crop_img ">
+                                    </div>
+                                    <div class="text_box">
+                                        <h2 class="placeholder py-0 mb-1 col-8"></h2>
+                                        <h3 class="placeholder col-6"></h3>
+                                    </div>
+                                </div>
+                                <h3 class="d-flex placeholder  col-5">
+                                    <i class="zmdi zmdi-pin text-start"></i>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section *ngIf="hospitals && hospitals.length" class="vendorList themePadding">
+        <div class="sectionContent py-2">
+            <div class="container">
+                <div class="row g-4">
+                    <div *ngFor="let hospital of hospitals | paginate: { itemsPerPage: pageSize, currentPage: pageNo }" class="col-12 col-md-6 col-xl-4 animate__animated animate__zoomIn wow">
+                        <div class="media d-block" (click)="navHospitalInfo(hospital)">
+                            <div class="media-body">
+                                <div class="media-header d-flex align-items-center">
+                                    <div *ngIf="hospital.images && hospital.images.length" class="img_box center_img">
+                                        <img [src]="hospital.images[0]" class="crop_img">
+                                    </div>
+                                    <div class="text_box">
+                                        <h2>{{hospital.name}}</h2>
+                                        <h3>{{hospital.tagline}}</h3>
+                                    </div>
+                                </div>
+                                <h3 class="d-flex">
+                                    <i class="zmdi zmdi-pin text-start"></i> {{hospital.address}}
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- <section class="vendorList themePadding">
+        <div class="sectionContent py-2">
+            <div class="container">
+                <div *ngIf="isLoading && !(hospitals && hospitals.length)" class="custome_spinner justify-content-center empty_view">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <h6>{{'loading' | translate}}...</h6>
+                </div>
+                <div *ngIf="!isLoading && !(hospitals && hospitals.length)" class="empty_view">
+                    <img src="assets/images/empty_categories.png" class="img-fluid">
+                    <h6>{{'empty_results' | translate}}</h6>
+                </div>
+                <div *ngIf="hospitals && hospitals.length" class="row g-4">
+                    <div *ngFor="let hospital of hospitals | paginate: { itemsPerPage: pageSize, currentPage: pageNo }" class="col-12 col-md-6 col-xl-4 animate__animated animate__zoomIn wow">
+                        <div class="media d-block" (click)="navHospitalInfo(hospital)">
+                            <div class="media-body">
+                                <div class="media-header d-flex align-items-center">
+                                    <div *ngIf="hospital.images && hospital.images.length" class="img_box center_img">
+                                        <img [src]="hospital.images[0]" class="crop_img">
+                                    </div>
+                                    <div class="text_box">
+                                        <h2>{{hospital.name}}</h2>
+                                        <h3>{{hospital.tagline}}</h3>
+                                    </div>
+                                </div>
+                                <h3 class="d-flex">
+                                    <i class="zmdi zmdi-pin text-start"></i> {{hospital.address}}
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+    <!-- Hospital List end -->
+
+    <!-- Today Discount start -->
+    <!-- <section class="discount themePadding pt-0">
+        <div class="container">
+            <div class="offer">
+                <div class="row align-items-center px-lg-4 px-xl-5">
+                    <div class="col-12 col-md-4 col-lg-3">
+                        <img src="assets/images/logo.png" class="img-fluid col-10 col-md-12 col-lg-8">
+                    </div>
+                    <div class="col-12 col-md-8 col-lg-9">
+                        <h2>Find and get Best Hospital & Doctors around you.</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+    <!-- Today Discount end -->
+    <div class="pagination-container">
+        <div class="container" *ngIf="pageTotal > pageSize">
+            <div class="row align-items-center">
+                <div class="col-12 col-md-6">
+                    <h2 class="text-center text-md-start pb-3 pb-md-0">
+                        {{'showing' | translate}} {{pageNo}} {{'to' | translate}} {{pageSize}} {{'of' | translate}} {{pageTotal}} {{'items' | translate}}
+                    </h2>
+                </div>
+                <div class="col-12 col-md-6 d-flex">
+                    <nav class="end" aria-label="Page navigation example">
+                        <nav class="navigation col-12" aria-label="Page navigation example">
+                            <pagination-controls [responsive]="isResponsive" [previousLabel]="'prev' | translate" [nextLabel]="'next' | translate" (pageChange)="onChangePage($event)">
+                            </pagination-controls>
+                        </nav>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Download app section start -->
+    <app-download-our-app> </app-download-our-app>
+    <!-- Download app section end -->
+
+    <!--Footer start -->
+    <app-footer></app-footer>
+    <!--Footer end -->
+</div>

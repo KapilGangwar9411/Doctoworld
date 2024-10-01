@@ -1,0 +1,540 @@
+<div class="body_wrapper">
+    <!-- Banner section start -->
+    <div class="banner">
+        <div class="mainBanner position-relative z-3 pt-5">
+            <div class="container position-relative z-3 pt-3">
+                <div class="row gap-0 align-items-end position-relative z-3">
+                    <div class="col-12 col-lg-6   pb-5 mb-3">
+                        <h1 class="h-font pb-4 text-center pt-5 pt-lg-0 text-lg-start an-1"
+                            innerHtml="{{'get_your_meds_delivered' | translate}}"></h1>
+                        <!-- <p class="pb-5 text-center text-lg-start ">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit <br> sed do eiusmod tempor.
+                        </p> -->
+                        <form class="col-12 col-lg-10 px-0" role="search">
+                            <div class="form-group search_box mb-0">
+                                <div class="form-group-inner d-flex align-items-center mb-0">
+                                    <input type="search" class="form-control" name="product" [(ngModel)]="productQuery"
+                                        placeholder="{{'search_medicines' | translate}}">
+                                    <button class="btn" type="submit" (click)="onSearchSubmit()">
+                                        <i class="zmdi zmdi-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-12 col-lg-6 text-center" style="overflow: hidden">
+                        <img src="assets/images/home_banner.png" class="img-fluid col-10 col-lg-12">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Features section start -->
+        <!-- <button class="btn rounded-pill my_orders" (click)="chat()">
+            <span>{{'chat' | translate}}</span>
+        </button> -->
+
+        <!-- category section start -->
+        <div class="category">
+            <div class="container">
+                <owl-carousel-o [options]="categoryCarousel">
+                    <ng-template *ngFor="let cat of categories" carouselSlide
+                        class="animate__animated animate__zoomIn wow">
+                        <h3 (click)="onCategorySelect(cat)">
+                            <a class="d-flex align-items-center">
+                                {{cat.title}}
+                                <!-- <i class="zmdi zmdi-chevron-down text-end"></i> -->
+                            </a>
+                        </h3>
+                    </ng-template>
+                </owl-carousel-o>
+            </div>
+        </div>
+        <!-- category section end -->
+    </div>
+    <!-- Banner section end -->
+
+
+    <!-- Item section section start -->
+
+
+    <section *ngIf="!(categoryProducts && categoryProducts.length)" class="itemRow themePadding placeholder-glow"
+        style="background: #fdfdfd">
+        <div class="sectionHeader">
+            <div class="container">
+                <h2 class="placeholder">$nbsp; $nbsp;$nbsp;$nbsp;$nbsp;</h2>
+            </div>
+        </div>
+
+        <div class="sectionContent">
+            <div class="container">
+                <div class="row g-3">
+                    <div *ngFor="let cat of [1,2,3,4,5,6,7,8,9]"
+                        class="col-12 col-md-6 col-lg-3 col-xl-2 animate__animated animate__zoomIn wow">
+                        <div class="item px-4 placeholder-wave">
+                            <div class="itemImg">
+                                <img src="assets/images/empty_image.png" class="placeholder">
+                            </div>
+                            <div class="itemText">
+                                <h2 class="placeholder">$nbsp;$nbsp;</h2>
+                                <h4 class="d-flex align-items-center">
+                                    <strong class="placeholder">$nbsp;$nbsp;</strong>
+                                    <!-- <span class="end">
+                                        <i class="zmdi zmdi-plus placeholder"></i>
+                                    </span> -->
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Item section section end -->
+
+
+
+    <!-- Item section section start -->
+    <section *ngIf="categoryProducts && categoryProducts.length" class="itemRow themePadding"
+        style="background: #fdfdfd">
+        <div class="sectionHeader">
+            <div *ngIf="categorySelected" class="container">
+                <h2 class="text-center text-lg-start">{{categorySelected.title}}</h2>
+            </div>
+        </div>
+
+        <div class="sectionContent">
+            <div class="container">
+                <div class="row g-3">
+                    <div *ngFor="let product of categoryProducts"
+                        class="col-12 col-md-6 col-lg-3 col-xl-2 animate__animated animate__zoomIn wow">
+                        <div class="item px-4">
+                            <div *ngIf="product.images && product.images.length" class="itemImg"
+                                (click)="medicine_info(product)">
+                                <img [src]="product.images[0]">
+                            </div>
+                            <div class="itemText">
+                                <h2 (click)="medicine_info(product)">{{product.title}}</h2>
+                                <h4 class="d-flex align-items-center">
+                                    {{product.priceToShow}}
+
+                                    <span class="end"
+                                        *ngIf="!eComService.isExistsCartItem(eComService.genCartItemFromProduct(product))"
+                                        (click)="addProCart(product)">
+                                        <i class="zmdi zmdi-plus"></i>
+                                    </span>
+                                    <h6 class="end"
+                                        *ngIf="eComService.isExistsCartItem(eComService.genCartItemFromProduct(product))">
+                                        <span (click)="removeCartItem(product)"><i class="zmdi zmdi-minus"></i></span>
+                                        <strong>{{eComService.getCartProductQuantity(getProductId(product))}}</strong>
+                                        <span (click)="addProCart(product)"><i class="zmdi zmdi-plus"></i></span>
+                                    </h6>
+
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Item section section end -->
+
+    <!-- Offers Slider section start -->
+    <app-offers></app-offers>
+    <!-- <div *ngIf="banners && banners.length" class="offers_slider row  py-5 g-0">
+        <div class="banner_space d-none"></div>
+        <owl-carousel-o [options]="bannerCarousel">
+            <ng-template *ngFor="let banner of banners" carouselSlide>
+                <img [src]="banner.image">
+            </ng-template>
+        </owl-carousel-o>
+    </div> -->
+    <!-- Offers Slider section end -->
+
+    <!-- Vendor section section end -->
+    <!-- vendor List start -->
+    <section *ngIf="!(vendorsArray && vendorsArray.length)" class="vendorList themePadding placeholder-glow">
+        <div class="sectionHeader placeholder-wave">
+            <div class="container">
+                <h2 class="placeholder">$nbsp; $nbsp;$nbsp;$nbsp;$nbsp;</h2>
+            </div>
+        </div>
+
+        <div class="sectionContent">
+            <div class="container">
+                <div class="row g-4">
+                    <div *ngFor="let vendor of [1,2,3,4,5,6,7]"
+                        class="col-12 col-md-6 col-xl-3 animate__animated animate__zoomIn wow">
+                        <div class="media placeholder-wave">
+                            <div class="img_box center_img placeholder">
+                                <img src="assets/images/empty_image.png" class="crop_img ">
+                            </div>
+                            <div class="media-body">
+                                <h2 class="placeholder pb-0 mb-2">$nbsp;$nbsp;$nbsp;$nbsp;</h2>
+                                <h5 class="placeholder pb-0">$nbsp;$nbsp;$nbsp;</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section *ngFor="let arr of vendorsArray;" class="vendorList themePadding">
+        <div class="sectionHeader">
+            <div class="container">
+                <h2 class="text-center text-lg-start">{{arr.searchTypes.title | translate}}</h2>
+            </div>
+        </div>
+
+        <div class="sectionContent">
+            <div class="container">
+                <div class="row g-4">
+                    <div *ngFor="let vendor of arr.vendors"
+                        class="col-12 col-md-6 col-xl-3 animate__animated animate__zoomIn wow">
+                        <div class="media" (click)="navVendorProfile(vendor.id)">
+                            <div class="img_box center_img">
+                                <img [src]="vendor.image" class="crop_img">
+                            </div>
+                            <div class="media-body">
+                                <h2>{{vendor.name}}</h2>
+                                <h5 class="d-flex align-items-center">
+                                    <i class="zmdi zmdi-pin"></i> {{vendor.categories_text}}
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- vendor List section end -->
+
+    <!-- Item section section start -->
+    <section *ngIf="!(productsArray && productsArray.length)" class="itemRow themePadding placeholder-glow"
+        style="background: #fdfdfd">
+        <div class="sectionHeader">
+            <div class="container">
+                <h2 class="placeholder">$nbsp; $nbsp;$nbsp;$nbsp;$nbsp;</h2>
+            </div>
+        </div>
+
+        <div class="sectionContent">
+            <div class="container">
+                <div class="row g-3">
+                    <div *ngFor="let cat of [1,2,3,4,5,6,7,8,9]"
+                        class="col-12 col-md-6 col-lg-3 col-xl-2 animate__animated animate__zoomIn wow">
+                        <div class="item px-4 placeholder-wave">
+                            <div class="itemImg">
+                                <img src="assets/images/empty_image.png" class="placeholder">
+                            </div>
+                            <div class="itemText">
+                                <h2 class="placeholder">$nbsp;$nbsp;</h2>
+                                <h4 class="d-flex align-items-center">
+                                    <strong class="placeholder">$nbsp;$nbsp;</strong>
+                                    <!-- <span class="end">
+                                        <i class="zmdi zmdi-plus placeholder"></i>
+                                    </span> -->
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <section *ngFor="let arr of productsArray;" class="itemRow themePadding" style="background: #fdfdfd">
+        <div class="sectionHeader">
+            <div class="container">
+                <h2 class="text-center text-lg-start">{{arr.searchTypes.title | translate}}</h2>
+            </div>
+        </div>
+
+        <div class="sectionContent">
+            <div class="container">
+                <div class="row g-3">
+                    <div class="col-12 col-md-6 col-lg-3 col-xl-2 animate__animated animate__zoomIn wow"
+                        *ngFor="let product of arr.products">
+                        <div class="item px-4">
+                            <div *ngIf="product.images && product.images.length" class="itemImg"
+                                (click)="medicine_info(product)">
+                                <!-- <img src="assets/images/items/2.png"> -->
+                                <img [src]="product.images[0]">
+                            </div>
+                            <div class="itemText">
+                                <h2 (click)="medicine_info(product)">{{product.title}}</h2>
+                                <h4 class="d-flex align-items-center">
+                                    {{product.priceToShow}}
+                                    <!-- <span class="end">
+                                        <i class="zmdi zmdi-plus"></i>
+                                    </span> -->
+                                    <span class="end"
+                                        *ngIf="!eComService.isExistsCartItem(eComService.genCartItemFromProduct(product))"
+                                        (click)="addProCart(product)">
+                                        <i class="zmdi zmdi-plus"></i>
+                                    </span>
+                                    <h6 class="end"
+                                        *ngIf="eComService.isExistsCartItem(eComService.genCartItemFromProduct(product))">
+                                        <span (click)="removeCartItem(product)"><i class="zmdi zmdi-minus"></i></span>
+                                        <strong>{{eComService.getCartProductQuantity(getProductId(product))}}</strong>
+                                        <span (click)="addProCart(product)"><i class="zmdi zmdi-plus"></i></span>
+                                    </h6>
+
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Item section section end -->
+
+
+    <!-- Today Discount start -->
+    <!-- <section class="discount" style="background: #fdfdfd">
+        <div class="container">
+            <div class="offer">
+                <div class="row align-items-center px-lg-4 px-xl-5">
+                    <div class="col-12 col-md-4 col-lg-3">
+                        <img src="assets/images/logo.png" class="img-fluid col-10 col-md-12 col-lg-8">
+                    </div>
+                    <div class="col-12 col-md-8 col-lg-9">
+                        <h2>Save flat 5% extra on medicines & Enjoy Free Delivery on first order</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+    <!-- Today Discount end -->
+
+    <!-- Item section section start -->
+    <!-- <section class="itemRow themePadding" style="background: #fdfdfd">
+        <div class="sectionHeader">
+            <div class="container">
+                <h2 class="text-center text-lg-start">Health Care Products</h2>
+            </div>
+        </div>
+
+        <div class="sectionContent">
+            <div class="container">
+                <div class="row g-3">
+                    <div class="col-12 col-md-6 col-lg-3 col-xl-2 animate__animated animate__zoomIn wow">
+                        <div class="item px-4">
+                            <div class="itemImg" (click)="medicine_info()">
+                                <img src="assets/images/items/1.png">
+                                <img src="assets/images/icons/px.png" class="prescription">
+                            </div>
+                            <div class="itemText">
+                                <h2 (click)="medicine_info()">Salospir 100mg <br>Tablet</h2>
+                                <h4 class="d-flex align-items-center">
+                                    $3.50
+                                    <span class="end">
+                                            <i class="zmdi zmdi-plus"></i>
+                                        </span>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3 col-xl-2 animate__animated animate__zoomIn wow">
+                        <div class="item px-4">
+                            <div class="itemImg" (click)="medicine_info()">
+                                <img src="assets/images/items/2.png">
+                            </div>
+                            <div class="itemText">
+                                <h2 (click)="medicine_info()">Xenical 120mg <br>Tablet</h2>
+                                <h4 class="d-flex align-items-center">
+                                    $3.00
+                                    <span class="end">
+                                            <i class="zmdi zmdi-plus"></i>
+                                        </span>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3 col-xl-2 animate__animated animate__zoomIn wow">
+                        <div class="item px-4">
+                            <div class="itemImg" (click)="medicine_info()">
+                                <img src="assets/images/items/3.png">
+                            </div>
+                            <div class="itemText">
+                                <h2 (click)="medicine_info()">Allergy Relief <br>Topcare Tablet</h2>
+                                <h4 class="d-flex align-items-center">
+                                    $3.00
+                                    <span class="end">
+                                            <i class="zmdi zmdi-plus"></i>
+                                        </span>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3 col-xl-2 animate__animated animate__zoomIn wow">
+                        <div class="item px-4">
+                            <div class="itemImg" (click)="medicine_info()">
+                                <img src="assets/images/items/4.png">
+                                <img src="assets/images/icons/px.png" class="prescription">
+                            </div>
+                            <div class="itemText">
+                                <h2 (click)="medicine_info()">Arber OTC <br>Tablet</h2>
+                                <h4 class="d-flex align-items-center">
+                                    $3.50
+                                    <span class="end">
+                                            <i class="zmdi zmdi-plus"></i>
+                                        </span>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3 col-xl-2 animate__animated animate__zoomIn wow">
+                        <div class="item px-4">
+                            <div class="itemImg" (click)="medicine_info()">
+                                <img src="assets/images/items/5.png">
+                            </div>
+                            <div class="itemText">
+                                <h2 (click)="medicine_info()">Non Drosy <br>Laritin Tablet</h2>
+                                <h4 class="d-flex align-items-center">
+                                    $3.50
+                                    <span class="end">
+                                            <i class="zmdi zmdi-plus"></i>
+                                        </span>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3 col-xl-2 animate__animated animate__zoomIn wow">
+                        <div class="item px-4">
+                            <div class="itemImg" (click)="medicine_info()">
+                                <img src="assets/images/items/6.png">
+                                <img src="assets/images/icons/px.png" class="prescription">
+                            </div>
+                            <div class="itemText">
+                                <h2 (click)="medicine_info()">CoricibinHBP 100mg<br>Tablet</h2>
+                                <h4 class="d-flex align-items-center">
+                                    $3.50
+                                    <span class="end">
+                                            <i class="zmdi zmdi-plus"></i>
+                                        </span>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12 col-md-6 col-lg-3 col-xl-2 animate__animated animate__zoomIn wow">
+                        <div class="item px-4">
+                            <div class="itemImg" (click)="medicine_info()">
+                                <img src="assets/images/items/2.png">
+                            </div>
+                            <div class="itemText">
+                                <h2 (click)="medicine_info()">Xenical 120mg <br>Tablet</h2>
+                                <h4 class="d-flex align-items-center">
+                                    $3.00
+                                    <span class="end">
+                                            <i class="zmdi zmdi-plus"></i>
+                                        </span>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3 col-xl-2 animate__animated animate__zoomIn wow">
+                        <div class="item px-4">
+                            <div class="itemImg" (click)="medicine_info()">
+                                <img src="assets/images/items/5.png">
+                            </div>
+                            <div class="itemText">
+                                <h2 (click)="medicine_info()">Non Drosy <br>Laritin Tablet</h2>
+                                <h4 class="d-flex align-items-center">
+                                    $3.50
+                                    <span class="end">
+                                            <i class="zmdi zmdi-plus"></i>
+                                        </span>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3 col-xl-2 animate__animated animate__zoomIn wow">
+                        <div class="item px-4">
+                            <div class="itemImg" (click)="medicine_info()">
+                                <img src="assets/images/items/1.png">
+                                <img src="assets/images/icons/px.png" class="prescription">
+                            </div>
+                            <div class="itemText">
+                                <h2 (click)="medicine_info()">Salospir 100mg <br>Tablet</h2>
+                                <h4 class="d-flex align-items-center">
+                                    $3.50
+                                    <span class="end">
+                                            <i class="zmdi zmdi-plus"></i>
+                                        </span>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3 col-xl-2 animate__animated animate__zoomIn wow">
+                        <div class="item px-4">
+                            <div class="itemImg" (click)="medicine_info()">
+                                <img src="assets/images/items/6.png">
+                                <img src="assets/images/icons/px.png" class="prescription">
+                            </div>
+                            <div class="itemText">
+                                <h2 (click)="medicine_info()">CoricibinHBP 100mg<br>Tablet</h2>
+                                <h4 class="d-flex align-items-center">
+                                    $3.50
+                                    <span class="end">
+                                            <i class="zmdi zmdi-plus"></i>
+                                        </span>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3 col-xl-2 animate__animated animate__zoomIn wow">
+                        <div class="item px-4">
+                            <div class="itemImg" (click)="medicine_info()">
+                                <img src="assets/images/items/3.png">
+                            </div>
+                            <div class="itemText">
+                                <h2 (click)="medicine_info()">Allergy Relief <br>Topcare Tablet</h2>
+                                <h4 class="d-flex align-items-center">
+                                    $3.00
+                                    <span class="end">
+                                            <i class="zmdi zmdi-plus"></i>
+                                        </span>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3 col-xl-2 animate__animated animate__zoomIn wow">
+                        <div class="item px-4">
+                            <div class="itemImg" (click)="medicine_info()">
+                                <img src="assets/images/items/4.png">
+                                <img src="assets/images/icons/px.png" class="prescription">
+                            </div>
+                            <div class="itemText">
+                                <h2 (click)="medicine_info()">Arber OTC <br>Tablet</h2>
+                                <h4 class="d-flex align-items-center">
+                                    $3.50
+                                    <span class="end">
+                                            <i class="zmdi zmdi-plus"></i>
+                                        </span>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section> -->
+    <!-- Item section section end -->
+
+
+    <!-- Download app section start -->
+    <app-download-our-app> </app-download-our-app>
+    <!-- Download app section end -->
+
+    <!--Footer start -->
+    <app-footer></app-footer>
+    <!--Footer end -->
+</div>

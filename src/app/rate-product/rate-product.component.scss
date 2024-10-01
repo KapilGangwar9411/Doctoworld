@@ -1,0 +1,136 @@
+.send_to_bank {
+    position: relative;
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+    padding-top: 70px;
+    background: var(--bg-white);
+    .header {
+        position: absolute;
+        top: 0;
+        z-index: 99;
+        background: var(--bg-white);
+        width: 100%;
+        min-height: 70px;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        i {
+            position: absolute;
+            font-size: 1.4rem;
+            color: var(--text-black);
+            cursor: pointer;
+        }
+        h2 {
+            margin: 0;
+            color: var(--text-black);
+            width: 100%;
+            text-align: center;
+            font-size: 1.05rem;
+            letter-spacing: 1px;
+        }
+    }
+    form {
+        min-height: calc(100vh - 120px);
+        max-height: calc(100vh - 120px);
+        overflow: hidden;
+        overflow-y: auto;
+        .card {
+            background: var(--bg-white);
+            box-shadow: none;
+            border: 0;
+            border-radius: 0;
+            border-bottom: 6px solid var(--bg-color);
+            &:last-child {
+                border: 0 !important;
+            }
+            .item_detail {
+                padding-bottom: 20px;
+                align-items: flex-end;
+                .img_box {
+                    width: 100%;
+                    min-width: 120px;
+                    max-width: 120px;
+                    img {
+                        display: block;
+                        max-height: 100px;
+                        max-width: 100px;
+                        margin-top: 50px;
+                    }
+                }
+                .text_box {
+                    width: 100%;
+                    h3 {
+                        margin: 0;
+                        color: var(--text-dark);
+                        font-size: 1.2rem;
+                        font-weight: 500;
+                    }
+                    h2 {
+                        margin: 0;
+                        color: var(--text-light);
+                        font-size: 0.75rem;
+                        font-weight: 400;
+                        padding-bottom: 7px;
+                    }
+                }
+            }
+            .overall_experience {
+                padding-bottom: 20px;
+                h2 {
+                    margin: 0;
+                    color: var(--text-light);
+                    font-size: 0.75rem;
+                    font-weight: 400;
+                    padding-bottom: 7px;
+                }
+                .rate {
+                    .icon_box {
+                        i {
+                            color: #dddddd;
+                            font-size: 2.2rem;
+                            min-width: 43px;
+                            cursor: pointer;
+                        }
+                        &.active {
+                            i {
+                                color: var(--yelow-color) !important;
+                            }
+                        }
+                    }
+                }
+            }
+            .add_feedback {
+                h2 {
+                    margin: 0;
+                    color: var(--text-light);
+                    font-size: 0.75rem;
+                    font-weight: 400;
+                    padding-bottom: 7px;
+                }
+            }
+        }
+        .from_inner .form-group {
+            label {
+                color: var(--text-light) !important;
+                font-size: 0.8rem !important;
+            }
+            .form-group-inner {
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                textarea {
+                    color: var(--text-dark2) !important;
+                    line-height: normal !important;
+                    padding-top: 15px !important;
+                }
+            }
+        }
+    }
+    button.btn {
+        border-radius: 0;
+        text-transform: unset;
+        letter-spacing: 1px;
+        width: 100%;
+    }
+}

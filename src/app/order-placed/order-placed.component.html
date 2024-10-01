@@ -1,0 +1,45 @@
+<div class="body_wrapper">
+    <section class="themePadding">
+        <div class="container">
+            <div class="card rounded-0 border-0 py-5 px-4">
+                <div class="card_content col-11 col-md-12 col-lg-12 col-xl-11 mx-auto px-0">
+                    <div class="row align-items-center text-center text-lg-start">
+                        <div class="col-12 col-md-12 col-lg-6 col-xl-6">
+                            <div class="col-12 col-md-12 col-lg-12 col-xl-10 p-0">
+                                <h2 class="animate__animated animate__fadeInUp wow">{{'your_order_has_been_placed_successfully' | translate}} !!</h2>
+                                <p class="animate__animated animate__fadeInUp wow">{{'you_can_check_your_order_process_in_my_orders_section' | translate}}.</p>
+
+                                <div class="row g-3 animate__animated animate__fadeInUp wow px-0">
+                                    <div class="col-12 col-md-5 pb-3 ">
+                                        <button class="btn rounded-pill my_orders" (click)="my_orders()">
+                                            <span>{{'my_orders' | translate}}</span>
+                                        </button>
+                                    </div>
+                                    <div class="col-12 col-md-7 pb-3" (click)="home()">
+                                        <button class="btn rounded-pill">
+                                            <span>{{'continue_shopping' | translate}}</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-6 col-xl-6">
+                            <div class="img_box text-center">
+                                <img src="assets/images/order_plased.png" class="img-fluid">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Download app section start -->
+    <app-download-our-app> </app-download-our-app>
+    <!-- Download app section end -->
+
+    <!--Footer start -->
+    <app-footer></app-footer>
+    <!--Footer end -->
+</div>

@@ -1,0 +1,81 @@
+<div class="book_an_appointment">
+    <div class="card px-4 py-4">
+        <h2 class="pb-3 pt-2 ">{{'add_money' | translate}}</h2>
+        <form>
+            <h2>{{'enter_amount_to_aad' | translate}}</h2>
+            <div class="from_inner mx-auto">
+                <div class="form-group ">
+                    <div class="form-group-inner d-flex align-items-center">
+                        <input type="number" name="amount" [(ngModel)]="amount" class="form-control" placeholder="Enter Amount">
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <h2 class="pb-4 pt-2 ">{{'add_money_via' | translate}}</h2>
+
+        <div class="payment_option pt-2">
+            <div *ngIf="isLoading && !(paymentMethods && paymentMethods.length)" class="custome_spinner justify-content-center empty_view">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <h6>{{'loading' | translate}}...</h6>
+            </div>
+            <div *ngIf="!isLoading && !(paymentMethods && paymentMethods.length)" class="empty_view">
+                <img src="assets/images/empty_orders.png" class="img-fluid">
+                <h6>{{'empty_transactions' | translate}}</h6>
+            </div>
+
+            <form>
+                <div class="from_inner">
+                    <div class="form-group" *ngFor="let pm of paymentMethods">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" class="form-check-input" type="radio" id="{{pm.id}}" value="{{pm.id}}" [(ngModel)]="paymentMethoIdSelect" [name]="pm.title">
+                            <label class="form-check-label" for="{{pm.id}}"> {{pm.title}} </label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- <div *ngFor="let pm of paymentMethods" class="option d-flex">
+                <div class="form-group-inner px-0">
+                    <div class="form-check" (click)="onPaymentMethodSelected(pm.id)">
+                        <input class="form-check-input" type="radio" id="{{pm.id}}" value="{{pm.id}}"
+                            [(ngModel)]="paymentMethoIdSelect" [name]="pm.title">
+                        <label class="form-check-label" for="{{pm.id}}">
+                            {{pm.title}}
+                        </label>
+                    </div>
+                </div>
+
+
+
+                <div class="icon_box center_img">
+                    <img src="assets/images/paymnet_options/payment_card.png" class="img-fluid crop_img">
+                </div>
+                <h3>{{pm.title}}</h3>
+            </div> -->
+            <!-- <div class="option d-flex">
+                <div class="icon_box center_img">
+                    <img src="assets/images/paymnet_options/payment_paypal.png" class="img-fluid crop_img">
+                </div>
+                <h3>PayPal</h3>
+            </div>
+            <div class="option d-flex">
+                <div class="icon_box center_img">
+                    <img src="assets/images/paymnet_options/payment_payu.png" class="img-fluid crop_img">
+                </div>
+                <h3>PayU Money</h3>
+            </div>
+            <div class="option d-flex">
+                <div class="icon_box center_img">
+                    <img src="assets/images/paymnet_options/payment_stripe.png" class="img-fluid crop_img">
+                </div>
+                <h3>Stripe</h3>
+            </div> -->
+        </div>
+        <button size="large" shape="full" class="btn" (click)="initAdd()">
+            {{'continue' | translate}}
+        </button>
+    </div>
+</div>

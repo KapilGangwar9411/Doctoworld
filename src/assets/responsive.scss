@@ -1,0 +1,326 @@
+@media (min-width: 576px) {}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+    .h-font {
+        font-weight: 600;
+        font-size: 3rem;
+    }
+    header .moreOptions ul {
+        width: calc(100% - 50%) !important;
+    }
+    .itemCarousel .item {
+        padding: 0 !important;
+    }
+    app-sign-in {
+        .bgAndLogo {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: fit-content;
+        }
+    }
+    app-download-our-app {
+        section {
+            h1 {
+                font-size: 3rem !important;
+            }
+            p {
+                font-size: .95rem!important;
+            }
+        }
+    }
+    app-seller-info {
+        .banner h1 {
+            font-size: 3rem !important;
+        }
+    }
+    app-my-account {
+        .nav .nav-item {
+            &::before {
+                width: calc(100% - 10px) !important;
+                opacity: .4;
+                transition: all .3 !important;
+            }
+            &::after {
+                height: 100% !important;
+                right: unset !important;
+                width: 0 !important;
+                transition: all .3 !important;
+            }
+            &.active {
+                &::after {
+                    width: 5px !important;
+                }
+                &::before {
+                    width: calc(100% - 0px) !important;
+                    opacity: 1!important;
+                }
+            }
+        }
+    }
+    app-select-location,
+    app-add-address {
+        .address_box {
+            .map {
+                max-height: 100% !important;
+            }
+            .cardOuter {
+                padding-top: 0 !important;
+            }
+        }
+    }
+    app-my-offers {
+        .list-group {
+            .list-group-item {
+                padding: 0 !important;
+                min-height: 90px;
+                .text_box {
+                    padding-left: 25px;
+                    h2 {
+                        font-size: 1.2rem !important;
+                    }
+                }
+                .offer_code {
+                    min-width: 110px;
+                    min-height: 90px;
+                    display: flex;
+                    align-items: center;
+                    border: 2px dashed #c1ddbd;
+                    position: relative;
+                    &::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: var(--primary);
+                        opacity: .1;
+                    }
+                    h3 {
+                        font-size: 1rem !important;
+                    }
+                }
+            }
+        }
+    }
+    app-vendor-info {
+        .nav .nav-item {
+            .nav-link {
+                border: 0 !important;
+                color: var(--text-black) !important;
+                &::after {
+                    width: 5px!important;
+                    left: unset!important;
+                    right: -100%!important;
+                }
+            }
+            &.active {
+                .nav-link {
+                    background: var(--bg-white);
+                    &::after {
+                        right: 0!important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 767px) {}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+    form {
+        .form-group {
+            label {
+                // font-size: 1rem!important;
+            }
+            .form-group-inner textarea,
+            .form-group-inner input,
+            .form-group-inner select {
+                min-height: 45px!important;
+                line-height: 45px!important;
+                padding: 0 8px!important;
+                // font-size: .95rem!important;
+            }
+        }
+    }
+    button.btn {
+        min-height: 50px !important;
+    }
+    .page-title {
+        padding: 28px 20px 28px 20px;
+        min-height: 100px;
+    }
+    button.btn.btn-lg {
+        width: 270px !important;
+    }
+    .page_offcanvas {
+        width: calc(100% - 50%);
+        max-width: 700px;
+    }
+    header .navbar .navbar-nav .nav-item {
+        border-bottom: 0 !important;
+    }
+    app-home {
+        .banner::before {
+            display: block !important;
+        }
+        .banner .category .container .category-row {
+            .col-6 {
+                min-width: 12.5%;
+                max-width: 12.5%;
+            }
+        }
+    }
+    app-my-offers {
+        .list-group {
+            .list-group-item {
+                min-height: 95px;
+                .text_box {
+                    padding-left: 30px;
+                }
+                .offer_code {
+                    min-height: 95px;
+                }
+            }
+        }
+    }
+    header {
+        .moreOptions {
+            .overlay {
+                background: none !important;
+            }
+            ul {
+                width: fit-content !important;
+                min-height: fit-content !important;
+                height: fit-content !important;
+                box-shadow: 0 0px 7px 2px rgba(0, 0, 0, 0.08);
+                right: 48px !important;
+                top: 67px !important;
+                border-radius: 7px;
+                min-width: fit-content;
+                padding: 7px 0 !important;
+                transform-origin: right top;
+                transform: scale3d(0, 0, 1);
+                opacity: 0;
+                li {
+                    a {
+                        padding: 10px 0 !important;
+                    }
+                }
+            }
+        }
+        &.active {
+            ul {
+                transform: scale3d(1, 1, 1);
+                opacity: 1;
+            }
+        }
+    }
+    app-hospitals {
+        .banner .mainBanner .banner_img {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+    }
+    app-my-orders,
+    app-my-appointment {
+        .vendorList {
+            .media {
+                background: var(--none) !important;
+                position: relative;
+                padding-right: 50px !important;
+                .media-body {
+                    position: relative;
+                    z-index: 99;
+                }
+                &::before {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: calc(100% - 25px);
+                    height: 100%;
+                    background: var(--bg-white);
+                    transition: all .4s;
+                }
+                &.active {
+                    &::before {
+                        width: 100% !important;
+                    }
+                }
+            }
+        }
+        .appointment_info {
+            background: none !important;
+            position: sticky !important;
+            width: 100% !important;
+            height: fit-content !important;
+            z-index: 9 !important;
+            top: 70px !important;
+            .card {
+                border-radius: 0 !important;
+                margin: 0 !important;
+                width: 100% !important;
+                top: 0 !important;
+                margin-top: 17px !important;
+                max-height: calc(100vh - 120px);
+            }
+        }
+        .appointment_placeholder {
+            background: none !important;
+            position: relative !important;
+            width: 100% !important;
+            height: fit-content !important;
+            z-index: 9 !important;
+            opacity: 1 !important;
+            &::before {
+                display: none !important;
+            }
+            .appointment_placeholder_inner {
+                margin: 0 !important;
+                padding: 0 !important;
+                background: none !important;
+                border-radius: 0 !important;
+            }
+        }
+    }
+}
+
+// X-Large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+    .h-font {
+        font-weight: 600;
+        font-size: 4rem;
+    }
+    .itemCarousel {
+        &.row {
+            .col-xl-auto {
+                min-width: 20% !important;
+                max-width: 20% !important;
+            }
+        }
+    }
+    header .moreOptions ul {
+        right: 138px !important;
+    }
+}
+
+// XX-Large devices (larger desktops, 1400px and up)
+@media (min-width: 1400px) {
+    .h-font {
+        font-weight: 600;
+        font-size: 5rem;
+    }
+    header .moreOptions ul {
+        right: 120px !important;
+    }
+}
+
+// XX-Large devices (larger desktops, 1400px and up)
+@media (min-width: 2000px) {}

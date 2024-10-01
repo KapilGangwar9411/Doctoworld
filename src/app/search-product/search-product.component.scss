@@ -1,0 +1,103 @@
+.banner {
+    position: relative;
+
+    form {
+        .form-group {
+            &.search_box {
+                .form-group-inner {
+                    background: var(--bg-white);
+                    border-radius: 12px;
+                    min-height: 60px;
+                    padding: 0 8px;
+
+                    button.btn {
+                        width: 45px !important;
+                        min-width: 45px !important;
+                        padding: 0;
+                        border-radius: 10px;
+                        display: flex;
+                        align-items: center;
+                        background: var(--secondary);
+
+                        i {
+                            color: var(--text-white);
+                            text-align: center;
+                            position: relative;
+                            margin: auto;
+                            top: 1px;
+                        }
+                    }
+
+                    input {
+                        min-height: 42px !important;
+                        line-height: 42px !important;
+                        font-weight: 500;
+                        padding: 0 11px !important;
+
+                        &::placeholder {
+                            color: var(--text-light2) !important;
+                            font-weight: 400;
+                        }
+
+                        &:-ms-input-placeholder {
+                            color: var(--text-light2) !important;
+                            font-weight: 400;
+                        }
+
+                        &::-ms-input-placeholder {
+                            color: var(--text-light2) !important;
+                            font-weight: 400;
+                        }
+
+                        &::-webkit-outer-spin-button,
+                        &::-webkit-inner-spin-button {
+                            color: var(--text-light2) !important;
+                            font-weight: 400;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .category {
+        background: var(--bg-white);
+
+        h3 {
+            margin: 0;
+
+            a {
+                color: var(--text-black);
+                text-decoration: none;
+                font-size: 0.9rem;
+                font-weight: 500;
+                padding: 18px 0;
+                width: fit-content;
+                margin: 0 auto;
+
+                i {
+                    font-size: 1.35rem;
+                    min-width: 24px;
+                }
+            }
+        }
+    }
+}
+
+
+.empty_view {
+    width: 100%;
+    text-align: center;
+    margin: auto;
+    height: fit-content;
+}
+
+.empty_view img {
+    width: 100px;
+    margin: auto;
+}
+
+.empty_view span {
+    display: block;
+    text-align: center;
+}

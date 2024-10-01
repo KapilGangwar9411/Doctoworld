@@ -1,0 +1,159 @@
+<div class="body_wrapper">
+    <!-- Banner section start -->
+    <div class="pageTitle">
+        <div class="container position-relative pt-3 z-3">
+            <h1 class="text-center py-lg-3 text-md-start">
+                {{ (addressPick ? 'pick_address' : 'my_account') | translate}}
+            </h1>
+        </div>
+    </div>
+    <section class="themePadding pt-4 pb-0">
+        <div class="container">
+            <div class="row g-0">
+                <div *ngIf="!addressPick" class="col-12 col-md-3 col-xl-2">
+                    <ul class="nav row g-0 d-flex">
+                        <li class="nav-item col-6 col-md-12 mb-md-2" [ngClass]="currSec == 'profile' ? 'active' : '' "
+                            (click)="currSec = 'profile';">
+                            <a class="nav-link text-md-start text-start">
+                                {{'my_profile' | translate}}
+                            </a>
+                        </li>
+                        <li class="nav-item col-6 col-md-12 mb-md-2" [ngClass]="currSec == 'address' ? 'active' : '' "
+                            (click)="currSec = 'address';">
+                            <a class="nav-link text-md-start text-start">
+                                {{'my_address' | translate}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-12 col-md-9 col-lg-9 col-xl-10">
+                    <div class="card pt-3 border-0 col-12 mx-auto" *ngIf="currSec == 'profile'">
+                        <form class="col-12 col-md-11 mx-auto px-3">
+                            <div class="row g-0 align-items-center pb-3 pb-lg-3">
+                                <div class="col-12 col-md-10 pb-4 pb-md-0">
+                                    <h2 class="m-0 mb-lg-2 animate__animated animate__fadeInUp wow">
+                                        {{'my_profile' | translate}}
+                                    </h2>
+                                </div>
+
+                                <div class="col-12 col-md-2 text-md-end">
+                                    <div class="img_container">
+                                        <div class="img_box center_img">
+                                            <img *ngIf="apiService.getUserMe() && apiService.getUserMe()!.image_url"
+                                                [src]="apiService.getUserMe()!.image_url" class="crop_img">
+                                            <img *ngIf="!(apiService.getUserMe() && apiService.getUserMe()!.image_url)"
+                                                src="assets/images/empty_dp.png" class="crop_img">
+                                        </div>
+                                        <i class="zmdi zmdi-camera"></i>
+                                        <input id="img" type="file" name="image" accept="image/*"
+                                            (change)="onImageChange($event)">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="from_inner">
+                                <div class="form-group animate__animated animate__fadeInUp wow">
+                                    <label>{{'full_name' | translate}}</label>
+                                    <div class="form-group-inner d-flex align-items-center">
+                                        <input type="text" name="name" class="form-control"
+                                            [(ngModel)]="apiService.getUserMe()!.name"
+                                            placeholder="{{'enter_full_name' | translate}}">
+                                    </div>
+                                </div>
+
+                                <div class="form-group animate__animated animate__fadeInUp wow">
+                                    <label>{{'email_address' | translate}}</label>
+                                    <div class="form-group-inner d-flex align-items-center">
+                                        <input type="email" name="email" class="form-control"
+                                            [(ngModel)]="apiService.getUserMe()!.email"
+                                            placeholder="{{'enter_email_address' | translate}}" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="form-group animate__animated animate__fadeInUp wow">
+                                    <label>{{'phone_number' | translate}}</label>
+                                    <div class="form-group-inner d-flex align-items-center">
+                                        <input type="tel" name="tel" class="form-control"
+                                            [(ngModel)]="apiService.getUserMe()!.mobile_number"
+                                            placeholder="{{'enter_phone_number' | translate}}" readonly>
+                                    </div>
+                                </div>
+                                <div class="d-flex mt-5  animate__animated animate__fadeInUp wow">
+                                    <button class="btn rounded-pill end" (click)="onSaveClick()">
+                                        {{'save' | translate}}
+                                    </button>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="card pt-3 border-0 col-12 mx-auto" *ngIf="currSec == 'address'">
+                        <form class="col-12 col-md-11 mx-auto px-3">
+                            <div class="row g-0 align-items-center pb-3 pb-lg-3" style="min-height: 91px;">
+                                <div class="col-12 col-md-6 pb-4 pb-md-0 d">
+                                    <h2 class="m-0 mb-lg-2 animate__animated animate__fadeInUp wow">
+                                        {{'my_address' | translate}}
+                                    </h2>
+                                </div>
+
+                                <div *ngIf="!isLoading" class="col-12 col-md-6 pb-4 pb-md-0 text-md-end">
+                                    <button class="btn rounded-pill animate__animated animate__fadeInUp wow"
+                                        style="display: inline-block;" (click)="onAddressEdit()">
+                                        {{'add_address' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                            <div *ngIf="isLoading && !(addresses && addresses.length)"
+                                class="custome_spinner justify-content-center">
+                                <div class="spinner-border" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <h6>{{'loading' | translate}}...</h6>
+                            </div>
+
+                            <div *ngIf="!isLoading && !(addresses && addresses.length)" class="empty_view">
+                                <img src="assets/images/empty_address.png" class="img-fluid">
+                                <h6>{{'no_saved_address' | translate}}</h6>
+                            </div>
+                            <div class="saved_address col-12 px-0 col-lg-11">
+                                <div class="from_inner">
+                                    <div *ngFor="let address of addresses"
+                                        class="form-group animate__animated animate__fadeInUp wow d-flex align-items-start">
+                                        <div class="text-box w-100" (click)="onAddressClick(address)">
+                                            <h3>{{address?.title}}</h3>
+                                            <p>{{address?.formatted_address}}</p>
+                                        </div>
+                                        <i *ngIf="!addressPick" class="zmdi zmdi-edit end" type="button"
+                                            (click)="onAddressEdit(address)"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- add new address -->
+    <!-- <div class="modal fade" id="onAddressClick" tabindex="-1" aria-labelledby="onAddressClickLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <app-add-address></app-add-address>
+            </div>
+        </div>
+    </div> -->
+
+
+    <!-- Download app section start -->
+    <app-download-our-app> </app-download-our-app>
+    <!-- Download app section end -->
+
+    <!--Footer start -->
+    <app-footer></app-footer>
+    <!--Footer end -->
+</div>

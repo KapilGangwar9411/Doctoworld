@@ -1,0 +1,27 @@
+.pageTitle {
+    background: none !important;
+    .container {
+        background: var(--bg-white);
+        padding: 30px 40px 15px;
+        img {
+            max-width: 1200px;
+        }
+        h2 {
+            margin: 0;
+            padding-bottom: 30px;
+            text-transform: uppercase;
+            color: var(--text-black);
+            font-size: 1.4rem;
+        }
+        form .form-group .form-group-inner {
+            border-radius: 10px;
+            i {
+                color: var(--text-light);
+            }
+            .form-control {
+                min-height: 50px !important;
+                line-height: 50px !important;
+            }
+        }
+    }
+}

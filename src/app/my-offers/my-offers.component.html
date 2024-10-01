@@ -1,0 +1,62 @@
+<div class="body_wrapper">
+    <!-- Banner section start -->
+    <div class="pageTitle">
+        <div class="container position-relative">
+            <h1 class="text-center py-4 text-md-start">
+                {{'my_offers' | translate}}
+            </h1>
+        </div>
+    </div>
+
+    <section class="themePadding pt-2">
+        <div class="container">
+            <ul *ngIf="isLoading && !(offers && offers.length)" class="list-group px-0 border-0 py-2 placeholder-glow">
+                <li *ngFor="let offer of [1,2,3,4,5,6,7,8,9]" class="list-group-item border-0 d-flex align-items-center animate__animated animate__fadeInUp wow">
+                    <div class="text_box placeholder-wave col-md-8 col-lg-10">
+                        <h2 class="placeholder">
+                        </h2>
+                        <p class="placeholder">$nbsp; $nbsp;$nbsp;</p>
+                    </div>
+
+
+                    <!-- <div class="offer_code col-md-4 col-lg-2 end placeholder-wave">
+                        <h3 class="placeholder"></h3>
+                    </div> -->
+                </li>
+            </ul>
+            <!-- <div *ngIf="isLoading && !(offers && offers.length)" class="custome_spinner justify-content-center empty_view">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <h6>{{'loading' | translate}}...</h6>
+            </div> -->
+            <div *ngIf="!isLoading && !(offers && offers.length)" class="empty_view">
+                <img src="assets/images/empty_orders.png" class="img-fluid">
+                <h6>{{'empty_offers' | translate}}</h6>
+            </div>
+            <ul class="list-group px-0 border-0 py-2">
+                <li *ngFor="let offer of offers" class="list-group-item border-0 d-flex align-items-center animate__animated animate__fadeInUp wow">
+                    <div class="text_box col-md-8 col-lg-10">
+                        <h2 class="">{{offer?.title}}</h2>
+                        <p>{{offer?.detail}}</p>
+                    </div>
+                    <!-- <div class="offer_code col-md-4 col-lg-2 end" (click)="copyOffer(offer)">
+                        <h3>{{offer?.code}}</h3>
+                    </div> -->
+                    <div class="offer_code col-md-4 col-lg-2 end">
+                        <h3>{{offer?.code}}</h3>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+
+    <!-- Download app section start -->
+    <app-download-our-app> </app-download-our-app>
+    <!-- Download app section end -->
+
+    <!--Footer start -->
+    <app-footer></app-footer>
+    <!--Footer end -->
+</div>

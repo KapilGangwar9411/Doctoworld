@@ -1,0 +1,459 @@
+<div class="body_wrapper">
+    <!-- Banner section start -->
+    <div class="banner">
+        <div class="mainBanner position-relative z-3 pt-5">
+            <div class="container position-relative z-3 pt-3">
+                <div class="row gap-0 align-items-end position-relative z-3">
+                    <div class="col-12 col-lg-6   pb-5 mb-3">
+                        <h1 class="h-font pb-4 text-center pt-5 pt-lg-0 text-lg-start an-1"
+                            innerHtml="{{'book_doctor_appointment' | translate}}"></h1>
+                        <p class="pb-5 text-center text-lg-start ">
+                            Book doctor appointments effortlessly, secure your preferred time slot with just a few
+                            clicks.
+                        </p>
+                        <form class="col-12 col-lg-10 px-0" role="search">
+                            <div class="form-group search_box mb-0">
+                                <div class="form-group-inner d-flex align-items-center mb-0">
+                                    <input type="text" class="form-control" name="doctor" [(ngModel)]="doctorQuery"
+                                        (keyup.enter)="navSearch()" placeholder="{{'search_doctor' | translate}}">
+                                    <button class="btn" type="submit" (click)="navSearch()">
+                                        <i class="zmdi zmdi-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-12 col-lg-6 text-center" style="overflow: hidden">
+                        <img src="assets/images/doctor_banner.png" class="img-fluid col-10 col-lg-12">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Features section start -->
+
+
+        <!-- category section start -->
+        <div *ngIf="doctorTypes && doctorTypes.length" class="category">
+            <div class="container">
+                <owl-carousel-o [options]="categoryCarousel">
+                    <ng-template *ngFor="let category of doctorTypes" carouselSlide
+                        class="animate__animated animate__zoomIn wow">
+                        <h3 (click)="navListDoctorsType(category)">
+                            <a class="d-flex align-items-center">
+                                {{category.title}}
+                                <i class="zmdi zmdi-chevron-down text-end"></i>
+                            </a>
+                        </h3>
+                    </ng-template>
+                </owl-carousel-o>
+            </div>
+        </div>
+        <!-- category section end -->
+    </div>
+    <!-- Doctor List start -->
+    <section *ngIf="!(doctors && doctors.length)" class="vendorList themePadding placeholder-glow">
+        <div class="sectionHeader placeholder-wave">
+            <div class="container">
+                <h2 class="text-center text-lg-start placeholder">$nbsp; $nbsp;$nbsp;$nbsp;$nbsp;</h2>
+            </div>
+        </div>
+
+        <div class="sectionContent">
+            <div class="container">
+                <div class="row g-4">
+                    <div *ngFor="let doctor of [1,2,3,4,5,6,7,8,9]"
+                        class="col-12 col-md-12 col-lg-6 col-xl-4 animate__animated animate__zoomIn wow">
+                        <div class="media pb-4 placeholder-wave">
+                            <div class="img_box center_img">
+                                <img src="assets/images/empty_image.png" class="crop_img placeholder">
+                            </div>
+                            <div class="media-body">
+                                <h2 class="placeholder">$nbsp; $nbsp;$nbsp;</h2>
+                                <h3 class="placeholder">$nbsp; $nbsp;$nbsp;</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section *ngIf="doctors && doctors.length" class="vendorList themePadding">
+        <div class="sectionHeader">
+            <div class="container">
+                <h2 class="text-center text-lg-start">{{doctorType.title}}</h2>
+            </div>
+        </div>
+
+        <div class="sectionContent">
+            <!-- <div *ngIf="isLoading && !(doctors && doctors.length)"
+                class="custome_spinner justify-content-center empty_view">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <h6>{{'loading' | translate}}...</h6>
+            </div>
+            <div *ngIf="!isLoading && !(doctors && doctors.length)" class="empty_view">
+                <img src="assets/images/empty_orders.png" class="img-fluid">
+                <h6>{{'empty_results' | translate}}</h6>
+            </div> -->
+            <div  class="container">
+                <div class="row g-4">
+                    <div *ngFor="let doctor of doctors"
+                        class="col-12 col-md-12 col-lg-6 col-xl-4 animate__animated animate__zoomIn wow">
+                        <div class="media pb-4" (click)="navDocProfile(doctor)">
+                            <div *ngIf="doctor.user && doctor.user.image_url" class="img_box center_img">
+                                <img [src]="doctor.user.image_url" class="crop_img">
+                            </div>
+
+                            <div *ngIf="!doctor.user || !doctor.user.image_url" class="img_box center_img">
+                                <img src="assets/images/empty_dp.png" class="crop_img">
+                            </div>
+                            <div class="media-body">
+                                <h2>{{doctor.name}}</h2>
+                                <h3>{{doctor.specializations_text}}</h3>
+                                <div class="row g-0">
+                                    <div class="col-12 col-md-5 pb-3 pb-md-0">
+                                        <h2>
+                                            {{'exp' | translate}}&nbsp;<strong>{{doctor.experience_years}}
+                                                {{'years' | translate}}</strong>
+                                        </h2>
+                                    </div>
+                                    <div class="col-6 col-md-3">
+                                        <h2>{{'fees' | translate}}&nbsp;<strong>{{currencyIcon}}{{doctor.fee}}</strong>
+                                        </h2>
+                                    </div>
+
+                                    <div class="d-flex col-6 col-md-4">
+                                        <h2 class="end">
+                                            <i
+                                                [ngClass]="doctor.ratings>=1 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'"></i>
+                                            <i
+                                                [ngClass]="doctor.ratings>=2 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'"></i>
+                                            <i
+                                                [ngClass]="doctor.ratings>=3 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'"></i>
+                                            <i
+                                                [ngClass]="doctor.ratings>=4 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'"></i>
+                                            <i
+                                                [ngClass]="doctor.ratings>=5 ? 'zmdi zmdi-star active' : 'zmdi zmdi-star'"></i>
+                                            <strong>&nbsp; ({{doctor.ratings_count}})</strong>
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Doctor List start -->
+    <!-- Banner section end -->
+
+
+
+    <!-- List of Specialties section start -->
+    <section *ngIf="!(specializations && specializations.length)" class="specialties py-5 placeholder-glow">
+        <div class="sectionHeader placeholder-wave">
+            <div class="container">
+                <h2 class="text-center text-lg-start placeholder">$nbsp; $nbsp;$nbsp;$nbsp;$nbsp;</h2>
+            </div>
+        </div>
+
+        <div class="sectionContent">
+            <div class="container ">
+                <div class="row g-0">
+                    <div class="col-12 col-md-6 col-lg-3 placeholder-wave" *ngFor="let category of [1,2,3,4]">
+                        <h3 class="placeholder">$nbsp;$nbsp;</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section *ngIf="specializations && specializations.length" class="specialties py-5">
+        <div class="sectionHeader">
+            <div class="container">
+                <h2 class="text-center text-lg-start">{{'list_of_doctor_specialiries' | translate}}</h2>
+            </div>
+        </div>
+
+        <div class="sectionContent">
+            <div class="container">
+                <div class="row g-0">
+                    <div class="col-12 col-md-6 col-lg-3" *ngFor="let category of specializations"
+                        (click)="navListDoctorsSpeciality(category)">
+                        <h3>{{category.title}}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- List of Specialties section end -->
+
+
+
+    <!-- Offers Slider section start -->
+    <div *ngIf="banners && banners.length" class="offers_slider row  py-5 g-0">
+        <div class="banner_space d-none"></div>
+        <owl-carousel-o [options]="bannerCarousel">
+            <ng-template *ngFor="let banner of banners" carouselSlide>
+                <img [src]="banner.image">
+            </ng-template>
+        </owl-carousel-o>
+    </div>
+    <!-- Offers Slider section end -->
+
+
+    <!-- Today Discount start -->
+    <!-- <section class="discount">
+        <div class="container">
+            <div class="offer">
+                <div class="row align-items-center px-lg-4 px-xl-5">
+                    <div class="col-12 col-md-4 col-lg-3">
+                        <img src="assets/images/logo.png" class="img-fluid col-10 col-md-12 col-lg-8">
+                    </div>
+                    <div class="col-12 col-md-8 col-lg-9">
+                        <h2>Book an appointment with the best doctors available around you</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+    <!-- Today Discount end -->
+
+
+    <!-- Doctor List start -->
+    <!-- <section class="vendorList themePadding">
+        <div class="sectionHeader">
+            <div class="container">
+                <h2 class="text-center text-lg-start">Best Doctors Available</h2>
+            </div>
+        </div>
+
+        <div class="sectionContent">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-12 col-md-6 col-xl-4 animate__animated animate__zoomIn wow">
+                        <div class="media pb-4" (click)="doctorInfo()">
+                            <div class="img_box center_img">
+                                <img src="assets/images/doctors/doc1.png" class="crop_img">
+                            </div>
+                            <div class="media-body">
+                                <h2>Dr. Joseph Williamson</h2>
+                                <h3> Cardiac Surgeon <span>{{'at' | translate}}</span> Apple Hospital</h3>
+                                <div class="row g-0">
+                                    <div class="col-4">
+                                        <h2>
+                                            {{'exp' | translate}}&nbsp;<strong>22
+                                                    {{'years' | translate}}</strong>
+                                        </h2>
+                                    </div>
+                                    <div class="col-3">
+                                        <h2>{{'fees' | translate}}&nbsp;<strong>$30</strong>
+                                        </h2>
+                                    </div>
+
+                                    <div class="d-flex col-5">
+                                        <h2 class="end">
+                                            <i class="zmdi zmdi-star active"></i>
+                                            <i class="zmdi zmdi-star active"></i>
+                                            <i class="zmdi zmdi-star active"></i>
+                                            <i class="zmdi zmdi-star active"></i>
+                                            <i class="zmdi zmdi-star"></i> &nbsp; (152)
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-xl-4 animate__animated animate__zoomIn wow">
+                        <div class="media pb-4" (click)="doctorInfo()">
+                            <div class="img_box center_img">
+                                <img src="assets/images/doctors/doc3.png" class="crop_img">
+                            </div>
+                            <div class="media-body">
+                                <h2>Dr. Anthony Peterson</h2>
+                                <h3> Cardiac Surgeon <span>{{'at' | translate}}</span> Opus Hospital
+                                </h3>
+                                <div class="row g-0">
+                                    <div class="col-4">
+                                        <h2>
+                                            {{'exp' | translate}}&nbsp;<strong>22
+                                                    {{'years' | translate}}</strong>
+                                        </h2>
+                                    </div>
+                                    <div class="col-3">
+                                        <h2>{{'fees' | translate}}&nbsp;<strong>$30</strong>
+                                        </h2>
+                                    </div>
+
+                                    <div class="d-flex col-5">
+                                        <h2 class="end">
+                                            <i class="zmdi zmdi-star active"></i>
+                                            <i class="zmdi zmdi-star active"></i>
+                                            <i class="zmdi zmdi-star active"></i>
+                                            <i class="zmdi zmdi-star active"></i>
+                                            <i class="zmdi zmdi-star active"></i> &nbsp; (199)
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-xl-4 animate__animated animate__zoomIn wow">
+                        <div class="media pb-4" (click)="doctorInfo()">
+                            <div class="img_box center_img">
+                                <img src="assets/images/doctors/doc2.png" class="crop_img">
+                            </div>
+                            <div class="media-body">
+                                <h2>Dr. Angline Taylor</h2>
+                                <h3> Cardiac Surgeon <span>{{'at' | translate}}</span> Operum Clinics
+                                </h3>
+                                <div class="row g-0">
+                                    <div class="col-4">
+                                        <h2>
+                                            {{'exp' | translate}}&nbsp;<strong>22
+                                                    {{'years' | translate}}</strong>
+                                        </h2>
+                                    </div>
+                                    <div class="col-3">
+                                        <h2>{{'fees' | translate}}&nbsp;<strong>$30</strong>
+                                        </h2>
+                                    </div>
+
+                                    <div class="d-flex col-5">
+                                        <h2 class="end">
+                                            <i class="zmdi zmdi-star active"></i>
+                                            <i class="zmdi zmdi-star active"></i>
+                                            <i class="zmdi zmdi-star active"></i>
+                                            <i class="zmdi zmdi-star active"></i>
+                                            <i class="zmdi zmdi-star active"></i> &nbsp; (240)
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-xl-4 animate__animated animate__zoomIn wow">
+                        <div class="media pb-4" (click)="doctorInfo()">
+                            <div class="img_box center_img">
+                                <img src="assets/images/doctors/doc4.png" class="crop_img">
+                            </div>
+                            <div class="media-body">
+                                <h2>Dr. Elina George </h2>
+                                <h3> Cardiac Surgeon <span>{{'at' | translate}}</span> Lisameth Hospital
+                                </h3>
+                                <div class="row g-0">
+                                    <div class="col-4">
+                                        <h2>
+                                            {{'exp' | translate}}&nbsp;<strong>22
+                                                    {{'years' | translate}}</strong>
+                                        </h2>
+                                    </div>
+                                    <div class="col-3">
+                                        <h2>{{'fees' | translate}}&nbsp;<strong>$30</strong>
+                                        </h2>
+                                    </div>
+
+                                    <div class="d-flex col-5">
+                                        <h2 class="end">
+                                            <i class="zmdi zmdi-star active"></i>
+                                            <i class="zmdi zmdi-star active"></i>
+                                            <i class="zmdi zmdi-star active"></i>
+                                            <i class="zmdi zmdi-star active"></i>
+                                            <i class="zmdi zmdi-star "></i> &nbsp; (192)
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-xl-4 animate__animated animate__zoomIn wow">
+                        <div class="media pb-4" (click)="doctorInfo()">
+                            <div class="img_box center_img">
+                                <img src="assets/images/doctors/doc1.png" class="crop_img">
+                            </div>
+                            <div class="media-body">
+                                <h2>Dr. Joseph Williamson</h2>
+                                <h3> Cardiac Surgeon <span>{{'at' | translate}}</span> Apple Hospital</h3>
+                                <div class="row g-0">
+                                    <div class="col-4">
+                                        <h2>
+                                            {{'exp' | translate}}&nbsp;<strong>22
+                                                    {{'years' | translate}}</strong>
+                                        </h2>
+                                    </div>
+                                    <div class="col-3">
+                                        <h2>{{'fees' | translate}}&nbsp;<strong>$30</strong>
+                                        </h2>
+                                    </div>
+
+                                    <div class="d-flex col-5">
+                                        <h2 class="end">
+                                            <i class="zmdi zmdi-star active"></i>
+                                            <i class="zmdi zmdi-star active"></i>
+                                            <i class="zmdi zmdi-star active"></i>
+                                            <i class="zmdi zmdi-star active"></i>
+                                            <i class="zmdi zmdi-star"></i> &nbsp; (152)
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-xl-4 animate__animated animate__zoomIn wow">
+                        <div class="media pb-4" (click)="doctorInfo()">
+                            <div class="img_box center_img">
+                                <img src="assets/images/doctors/doc3.png" class="crop_img">
+                            </div>
+                            <div class="media-body">
+                                <h2>Dr. Anthony Peterson</h2>
+                                <h3> Cardiac Surgeon <span>{{'at' | translate}}</span> Opus Hospital
+                                </h3>
+                                <div class="row g-0">
+                                    <div class="col-4">
+                                        <h2>
+                                            {{'exp' | translate}}&nbsp;<strong>22
+                                                    {{'years' | translate}}</strong>
+                                        </h2>
+                                    </div>
+                                    <div class="col-3">
+                                        <h2>{{'fees' | translate}}&nbsp;<strong>$30</strong>
+                                        </h2>
+                                    </div>
+
+                                    <div class="d-flex col-5">
+                                        <h2 class="end">
+                                            <i class="zmdi zmdi-star active"></i>
+                                            <i class="zmdi zmdi-star active"></i>
+                                            <i class="zmdi zmdi-star active"></i>
+                                            <i class="zmdi zmdi-star active"></i>
+                                            <i class="zmdi zmdi-star active"></i> &nbsp; (199)
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+    <!-- Doctor List start -->
+
+
+
+
+
+    <!-- Download app section start -->
+    <app-download-our-app> </app-download-our-app>
+    <!-- Download app section end -->
+
+    <!--Footer start -->
+    <app-footer></app-footer>
+    <!--Footer end -->
+</div>

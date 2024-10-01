@@ -1,0 +1,18 @@
+.map {
+    min-height: 745px;
+    position: relative;
+    i {
+        color: var(--text-white);
+        background: var(--yelow-color);
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        position: absolute;
+        text-align: center;
+        line-height: 45px;
+        font-size: 1.4rem;
+    }
+    img {
+        max-width: unset;
+    }
+}

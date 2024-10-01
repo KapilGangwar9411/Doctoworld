@@ -1,0 +1,311 @@
+<div class="body_wrapper">
+    <!-- Banner section start -->
+    <div class="pageTitle">
+        <div class="container position-relative">
+            <h1 class="text-center py-5 pb-4 text-md-start">
+                {{'my_orders' | translate}}
+            </h1>
+        </div>
+    </div>
+
+    <section class="themePadding  pt-2">
+        <div *ngIf="isLoading && !(orders && orders.length)" class="container order_info_container">
+            <div class="container_inner">
+                <div class="row g-0">
+                    <!-- Appointments list section start -->
+                    <div class="col-12 col-lg-5 col-xl-5 placeholder-glow">
+                        <div class="order_list">
+                            <div class="vendorList">
+                                <div class="media placeholder-wave" *ngFor="let ap of [1,2,3,4,5,6,7,8,9]">
+                                    <div class="img_box center_img placeholder">
+                                        <img src="assets/images/empty_image.png" class="crop_img placeholder">
+                                    </div>
+                                    <div class="media-body">
+                                        <h2 class="d-flex">
+                                            <span class="placeholder col-8">&nbsp;&nbsp;&nbsp;</span>
+                                            <span class="end placeholder col-3">&nbsp;</span>
+                                        </h2>
+                                        <h3 class="d-flex">
+                                            <span class="placeholder col-6">&nbsp;&nbsp;</span>
+                                            <span class="end placeholder col-2">&nbsp;</span>
+                                        </h3>
+                                        <div class="item d-flex align-items-end">
+                                            <div class="col-5">
+                                                <h4 class="d-flex placeholder py-0">
+                                                    &nbsp;&nbsp;&nbsp;
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Appointments list section end -->
+                    <div class="col-12 col-lg-7 col-xl-7 pt-5 pt-lg-3">
+                        <div class="appointment_placeholder text-center pt-5">
+                            <!-- <div class="close d-lg-none" (click)="hideAppointmentPlaceholder()">
+                                <i class="zmdi zmdi-close"></i>
+                            </div> -->
+                            <div class="appointment_placeholder_inner">
+                                <img src="assets/images/myorder_placeholder.png" class="mb-4 img-fluid col-lg-8">
+                                <h2>{{'click_on_order_to_view_details' | translate}} </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!isLoading && !(orders && orders.length)" class="empty_view">
+            <img src="assets/images/empty_orders.png" class="img-fluid">
+            <h6>{{'time_to_kickstart_your_healthcare_shopping_journey' | translate}}</h6>
+        </div>
+        <div *ngIf="(orders && orders.length)" class="container order_info_container">
+            <div class="container_inner">
+                <div class="row g-0">
+                    <!-- Appointments list section start -->
+                    <div class="col-12 col-lg-5 col-xl-5">
+                        <div class="order_list">
+                            <div class="vendorList" infiniteScroll [infiniteScrollDistance]="2"
+                                [infiniteScrollThrottle]="300" (scrolled)="onScrollDown()">
+                                <div *ngFor="let order of orders">
+                                    <h5 *ngIf="0 > order.id">{{order.order_type | translate}}</h5>
+                                    <div *ngIf="order.id > 0" class="media"
+                                        [ngClass]="(order.id == orderToShow?.id) ? 'active' : '' "
+                                        (click)="toggleOrderExpansion(order)">
+                                        <div class="img_box center_img">
+                                            <img [src]="order.vendor.image" class="crop_img">
+                                        </div>
+                                        <div class="media-body">
+                                            <h2 class="d-flex">{{order.vendor.name}}
+                                                <span class="end"
+                                                    [ngClass]="{'in_transist': (order.status=='dispatched' || order.status=='intransit'), 'delivered':order.status=='complete', 'confirmed':order.status=='accepted' }">{{('order_status_'+order.status)
+                                                    | translate}}</span>
+                                            </h2>
+                                            <h3 class="d-flex">
+                                                {{order.created_at}}
+                                                <span class="end">{{'order_id' | translate}}{{order.id}} |
+                                                    {{order.total_toshow}}</span>
+                                            </h3>
+                                            <div class="item d-flex align-items-end">
+                                                <div class="w-100">
+                                                    <h4 *ngFor="let product of order.products" class="d-flex">
+                                                        {{product?.vendor_product?.product?.title}}
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Appointments list section end -->
+
+
+                    <!-- Appointment info section start -->
+                    <div class="col-12 col-lg-7 col-xl-7 pt-5 pt-lg-3">
+                        <div *ngIf="!isLoading && !(orderToShow && orderToShow.id)"
+                            class="appointment_placeholder text-center pt-5"
+                            [ngClass]="!(orderToShow && orderToShow.id) ? 'active' : '' ">
+                            <!-- <div class="close d-lg-none" (click)="hideAppointmentPlaceholder()">
+                                <i class="zmdi zmdi-close"></i>
+                            </div> -->
+                            <div class="appointment_placeholder_inner">
+                                <img src="assets/images/myorder_placeholder.png" class="mb-4 img-fluid col-lg-8">
+                                <h2>{{'click_on_order_to_view_details' | translate}} </h2>
+                            </div>
+                        </div>
+
+                        <div *ngIf="orderToShow && orderToShow.id" class="appointment_info pt-lg-0"
+                            [ngClass]="orderToShow && orderToShow.id ? 'active' : ''">
+                            <br>
+                            <div class="card px-1 px-lg-4 py-4">
+                                <!-- <div class="close d-lg-none text-end" (click)="closeAppointmentInfoModel()">
+                                    <h3>{{'close' | translate}} </h3>
+                                </div> -->
+                                <div class="order_list">
+                                    <div class="vendorList">
+                                        <div class="media p-0">
+                                            <div class="img_box center_img">
+                                                <img [src]="orderToShow?.vendor?.image" class="crop_img">
+                                            </div>
+                                            <div class="media-body">
+                                                <h2 class="d-flex">{{orderToShow?.vendor?.name}}
+                                                    <span class="end"
+                                                        [ngClass]="{'in_transist': (orderToShow.status=='dispatched' || orderToShow.status=='intransit'), 'delivered':orderToShow.status=='complete', 'confirmed':orderToShow.status=='accepted' }">{{('order_status_'+orderToShow?.status)
+                                                        |
+                                                        translate}}</span>
+                                                </h2>
+                                                <h3 class="d-flex">
+                                                    {{orderToShow?.created_at}}
+                                                    <span class="end">{{orderToShow?.total_toshow}} |
+                                                        {{orderToShow?.payment?.payment_method?.title || 'COD'}}</span>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="order_process">
+                                    <div class="process d-flex"
+                                        [ngClass]="{'done':orderToShow.orderProgress>=2,'active':orderToShow.orderProgress==1}">
+                                        <div class="icon_box">
+                                            <i class="zmdi zmdi-circle-o"></i>
+                                            <i class="zmdi zmdi-check-circle"></i>
+                                            <span></span>
+                                            <span></span>
+                                        </div>
+
+                                        <div class="text_box">
+                                            <h2>{{'order_confirmed' | translate}}</h2>
+                                            <!-- <h3>3:45 | 20 June 2020</h3> -->
+                                        </div>
+                                    </div>
+
+                                    <div class="process d-flex"
+                                        [ngClass]="{'done':orderToShow.orderProgress>=3,'active':orderToShow.orderProgress==2}">
+                                        <div class="icon_box">
+                                            <i class="zmdi zmdi-circle-o"></i>
+                                            <i class="zmdi zmdi-check-circle"></i>
+                                            <span></span>
+                                            <span></span>
+                                        </div>
+                                        <div class="text_box">
+                                            <h2>{{'order_picked' | translate}}</h2>
+                                            <!-- <h3>4:32 | 20 June 2020</h3> -->
+                                        </div>
+                                        <h5 class="end" *ngIf="orderToShow && orderToShow.orderProgress == 2"
+                                            (click)="trackOrder()">
+                                            <i class="zmdi zmdi-navigation"></i> {{'track' | translate}}
+                                        </h5>
+                                    </div>
+
+                                    <div class="process d-flex"
+                                        [ngClass]="{'done':orderToShow.orderProgress>=3,'active':orderToShow.orderProgress==3}">
+                                        <div class="icon_box">
+                                            <i class="zmdi zmdi-circle-o"></i>
+                                            <i class="zmdi zmdi-check-circle"></i>
+                                        </div>
+                                        <div class="text_box">
+                                            <h2>{{'order_delivered' | translate}}
+                                                <!-- <span class="end" *ngIf="orderToShow && orderToShow.status == 'complete'" >
+                                                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                                                    {{'rate_now' | translate}}
+                                                </span> -->
+                                            </h2>
+                                            <h5 class="end" *ngIf="canRate()"
+                                                (click)="navReviewProduct()">{{'review_now' | translate}}</h5>
+                                            <!-- <h3>{{'yet_to_delivered' | translate}}</h3> -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ordered_items">
+                                    <h5>{{'order_summary' | translate}}</h5>
+
+                                    <div *ngFor="let product of orderToShow.products" class="item">
+                                        <h2 class="d-flex">{{product?.vendor_product?.product?.title}}</h2>
+                                        <h3 class="d-flex">x {{product?.quantity}}
+                                            <span class="end">{{product?.total_toshow}}</span>
+                                        </h3>
+                                    </div>
+
+                                    <!-- <div class="item">
+                                        <h2 class="d-flex">Non Drosy Laritin Tablet &nbsp;&nbsp;&nbsp;<img *ngIf="product.prescription_required" src="assets/images/icons/px.png"></h2>
+                                        <h3 class="d-flex">1 Pack
+                                            <span class="end">$8.00</span>
+                                        </h3>
+                                    </div>
+
+                                    <div class="item">
+                                        <h2 class="d-flex">Xenical 120mg Tablet &nbsp;&nbsp;&nbsp;
+                                            <img src="assets/images/icons/px.png">
+                                        </h2>
+                                        <h3 class="d-flex">1 Pack
+                                            <span class="end">$4.00</span>
+                                        </h3>
+                                    </div> -->
+                                </div>
+
+                                <div *ngIf="orderToShow && orderToShow.prescriptionLink != null"
+                                    class="prescription d-flex">
+                                    <img src="assets/images/icons/px.png">&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <h2>{{'prescription_uploaded' | translate}}</h2>
+                                    <i class="zmdi zmdi-eye end text-end" (click)="viewPresciption()"></i>
+                                </div>
+
+                                <div class="payment_info">
+                                    <div class="item">
+                                        <h2 class="d-flex">{{'sub_total' | translate}}
+                                            <span class="end">{{orderToShow?.subtotal_toshow}}</span>
+                                        </h2>
+                                    </div>
+                                    <div *ngIf="orderToShow && orderToShow.taxes_toshow" class="item">
+                                        <h2 class="d-flex">{{'tax_in_percent' | translate}}
+                                            <span class="end">{{orderToShow?.taxes_toshow}}</span>
+                                        </h2>
+                                    </div>
+                                    <div *ngIf="orderToShow && orderToShow.discount_toshow" class="item">
+                                        <h2 class="d-flex">{{'promo_code_applied' | translate}}
+                                            <span class="end">{{orderToShow?.discount_toshow}}</span>
+                                        </h2>
+                                    </div>
+                                    <div *ngIf="orderToShow && orderToShow.delivery_fee_toshow" class="item">
+                                        <h2 class="d-flex">{{'delivery_fee' | translate}}
+                                            <span class="end">{{orderToShow?.delivery_fee_toshow}}</span>
+                                        </h2>
+                                    </div>
+                                    <div class="item">
+                                        <h2 class="d-flex" style="color: var(--primary); font-size: 1.1rem;">
+                                            {{'amount_via' | translate}} {{orderToShow?.payment?.payment_method?.slug ||
+                                            'COD' | uppercase}}
+                                            <span class="end">{{orderToShow?.total_toshow}}</span>
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Appointment info section end -->
+                </div>
+            </div>
+        </div>
+        <div *ngIf="isLoading && (orders && orders.length)" class="custome_spinner justify-content-center empty_view">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <h6>{{'loading' | translate}}...</h6>
+        </div>
+    </section>
+    <!-- 
+    <div class="pagination-container">
+        <div class="container" *ngIf="pageTotal > pageSize">
+            <div class="row align-items-center">
+                <div class="col-12 col-md-6">
+                    <h2 class="text-center text-md-start pb-3 pb-md-0">
+                        {{'showing' | translate}} {{pageNo}} {{'to' | translate}} {{pageSize}} {{'of' | translate}}
+                        {{pageTotal}} {{'items' | translate}}
+                    </h2>
+                </div>
+                <div class="col-12 col-md-6 d-flex">
+                    <nav class="end" aria-label="Page navigation example">
+                        <nav class="navigation col-12" aria-label="Page navigation example">
+                            <pagination-controls [responsive]="isResponsive" [previousLabel]="'prev' | translate"
+                                [nextLabel]="'next' | translate" (pageChange)="onChangePage($event)">
+                            </pagination-controls>
+                        </nav>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Download app section start -->
+    <app-download-our-app> </app-download-our-app>
+    <!-- Download app section end -->
+
+    <!--Footer start -->
+    <app-footer></app-footer>
+    <!--Footer end -->
+</div>
